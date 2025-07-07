@@ -32,6 +32,13 @@ const items = computed<NavigationMenuItem[][]>(() => {
     ],
     [
       {
+        label: 'Terminal',
+        to: '/terminal',
+        icon: 'i-lucide-terminal',
+      },
+    ],
+    [
+      {
         label: 'GitHub',
         icon: 'i-lucide-github',
         badge: '1',

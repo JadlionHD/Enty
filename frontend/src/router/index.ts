@@ -18,11 +18,15 @@ const router = createRouter({
       name: 'services',
       component: () => import('../views/Services/index.vue'),
     },
-
     {
       path: '/services/:app',
       name: 'servicesApp',
       component: () => import('../views/Services/app.vue'),
+    },
+    {
+      path: '/terminal',
+      name: 'terminal',
+      component: () => import('../views/TerminalView.vue'),
     },
   ],
 })

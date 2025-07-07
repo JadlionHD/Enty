@@ -1,4 +1,4 @@
-module Enty
+module github.com/JadlionHD/Enty
 
 go 1.23
 
