@@ -16,9 +16,10 @@ A Moe local development app :>
 
 Before you begin, ensure you have the following installed:
 
-- [Go](https://golang.org/doc/install) (version 1.23 or higher)
+- [Go](https://go.dev/doc/install) (version 1.23 or higher)
 - [Node.js](https://nodejs.org/) (version 22 or higher)
 - [Wails](https://wails.io/docs/gettingstarted/installation)
+- [Make](https://www.gnu.org/software/make/)
 
 ## Installation
 
