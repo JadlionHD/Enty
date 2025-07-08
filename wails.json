@@ -6,6 +6,9 @@
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
+  "info": {
+    "comments": "A Moe local development app :>"
+  },
   "author": {
     "name": "Hendra Gunawan",
     "email": "jadlion.dev@gmail.com"

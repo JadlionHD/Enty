@@ -1,0 +1,2159 @@
+{
+  "mysql": [
+    {
+      "os": "Windows",
+      "data": [
+        {
+          "version": "8.2.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.2.0-winx64.zip"
+        },
+        {
+          "version": "8.1.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.1.0-winx64.zip"
+        },
+        {
+          "version": "8.0.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.41-winx64.zip"
+        },
+        {
+          "version": "8.0.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.40-winx64.zip"
+        },
+        {
+          "version": "8.0.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.39-winx64.zip"
+        },
+        {
+          "version": "8.0.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.37-winx64.zip"
+        },
+        {
+          "version": "8.0.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.36-winx64.zip"
+        },
+        {
+          "version": "8.0.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.35-winx64.zip"
+        },
+        {
+          "version": "8.0.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.34-winx64.zip"
+        },
+        {
+          "version": "8.0.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.33-winx64.zip"
+        },
+        {
+          "version": "8.0.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.32-winx64.zip"
+        },
+        {
+          "version": "8.0.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.31-winx64.zip"
+        },
+        {
+          "version": "8.0.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.30-winx64.zip"
+        },
+        {
+          "version": "8.0.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.28-winx64.zip"
+        },
+        {
+          "version": "8.0.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.27-winx64.zip"
+        },
+        {
+          "version": "8.0.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-winx64.zip"
+        },
+        {
+          "version": "8.0.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.25-winx64.zip"
+        },
+        {
+          "version": "8.0.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.24-winx64.zip"
+        },
+        {
+          "version": "8.0.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.23-winx64.zip"
+        },
+        {
+          "version": "8.0.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.22-winx64.zip"
+        },
+        {
+          "version": "8.0.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.21-winx64.zip"
+        },
+        {
+          "version": "8.0.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.20-winx64.zip"
+        },
+        {
+          "version": "8.0.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.19-winx64.zip"
+        },
+        {
+          "version": "8.0.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.18-winx64.zip"
+        },
+        {
+          "version": "8.0.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.17-winx64.zip"
+        },
+        {
+          "version": "8.0.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.16-winx64.zip"
+        },
+        {
+          "version": "8.0.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.15-winx64.zip"
+        },
+        {
+          "version": "8.0.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.14-winx64.zip"
+        },
+        {
+          "version": "8.0.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.13-winx64.zip"
+        },
+        {
+          "version": "8.0.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.12-winx64.zip"
+        },
+        {
+          "version": "8.0.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.11-winx64.zip"
+        },
+        {
+          "version": "5.7.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.44-winx64.zip"
+        },
+        {
+          "version": "5.7.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.43-winx64.zip"
+        },
+        {
+          "version": "5.7.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.42-winx64.zip"
+        },
+        {
+          "version": "5.7.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.41-winx64.zip"
+        },
+        {
+          "version": "5.7.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.40-winx64.zip"
+        },
+        {
+          "version": "5.7.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.39-winx64.zip"
+        },
+        {
+          "version": "5.7.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.38-winx64.zip"
+        },
+        {
+          "version": "5.7.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.37-winx64.zip"
+        },
+        {
+          "version": "5.7.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.36-winx64.zip"
+        },
+        {
+          "version": "5.7.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.35-winx64.zip"
+        },
+        {
+          "version": "5.7.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.34-winx64.zip"
+        },
+        {
+          "version": "5.7.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.33-winx64.zip"
+        },
+        {
+          "version": "5.7.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.32-winx64.zip"
+        },
+        {
+          "version": "5.7.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.31-winx64.zip"
+        },
+        {
+          "version": "5.7.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.30-winx64.zip"
+        },
+        {
+          "version": "5.7.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.29-winx64.zip"
+        },
+        {
+          "version": "5.7.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-winx64.zip"
+        },
+        {
+          "version": "5.7.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.27-winx64.zip"
+        },
+        {
+          "version": "5.7.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.26-winx64.zip"
+        },
+        {
+          "version": "5.7.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.25-winx64.zip"
+        },
+        {
+          "version": "5.7.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.24-winx64.zip"
+        },
+        {
+          "version": "5.7.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.23-winx64.zip"
+        },
+        {
+          "version": "5.7.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.22-winx64.zip"
+        },
+        {
+          "version": "5.7.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.21-winx64.zip"
+        },
+        {
+          "version": "5.7.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.20-winx64.zip"
+        },
+        {
+          "version": "5.7.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.19-winx64.zip"
+        },
+        {
+          "version": "5.7.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.18-winx64.zip"
+        },
+        {
+          "version": "5.7.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.17-winx64.zip"
+        },
+        {
+          "version": "5.7.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.16-winx64.zip"
+        },
+        {
+          "version": "5.7.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.15-winx64.zip"
+        },
+        {
+          "version": "5.7.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.14-winx64.zip"
+        },
+        {
+          "version": "5.7.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.13-winx64.zip"
+        },
+        {
+          "version": "5.7.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.12-winx64.zip"
+        },
+        {
+          "version": "5.7.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.11-winx64.zip"
+        },
+        {
+          "version": "5.7.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.10-winx64.zip"
+        },
+        {
+          "version": "5.7.9",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.9-winx64.zip"
+        },
+        {
+          "version": "5.6.51",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.51-winx64.zip"
+        },
+        {
+          "version": "5.6.50",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.50-winx64.zip"
+        },
+        {
+          "version": "5.6.49",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.49-winx64.zip"
+        },
+        {
+          "version": "5.6.48",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.48-winx64.zip"
+        },
+        {
+          "version": "5.6.47",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.47-winx64.zip"
+        },
+        {
+          "version": "5.6.46",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.46-winx64.zip"
+        },
+        {
+          "version": "5.6.45",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.45-winx64.zip"
+        },
+        {
+          "version": "5.6.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.44-winx64.zip"
+        },
+        {
+          "version": "5.6.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.43-winx64.zip"
+        },
+        {
+          "version": "5.6.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.42-winx64.zip"
+        },
+        {
+          "version": "5.6.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.41-winx64.zip"
+        },
+        {
+          "version": "5.6.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.40-winx64.zip"
+        },
+        {
+          "version": "5.6.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.39-winx64.zip"
+        },
+        {
+          "version": "5.6.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.38-winx64.zip"
+        },
+        {
+          "version": "5.6.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.37-winx64.zip"
+        },
+        {
+          "version": "5.6.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.36-winx64.zip"
+        },
+        {
+          "version": "5.6.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.35-winx64.zip"
+        },
+        {
+          "version": "5.6.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.34-winx64.zip"
+        },
+        {
+          "version": "5.6.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.33-winx64.zip"
+        },
+        {
+          "version": "5.6.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.32-winx64.zip"
+        },
+        {
+          "version": "5.6.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.31-winx64.zip"
+        },
+        {
+          "version": "5.6.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.30-winx64.zip"
+        },
+        {
+          "version": "5.6.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.29-winx64.zip"
+        },
+        {
+          "version": "5.6.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.28-winx64.zip"
+        },
+        {
+          "version": "5.6.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.27-winx64.zip"
+        },
+        {
+          "version": "5.6.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.26-winx64.zip"
+        },
+        {
+          "version": "5.6.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.25-winx64.zip"
+        },
+        {
+          "version": "5.6.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.24-winx64.zip"
+        },
+        {
+          "version": "5.6.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.23-winx64.zip"
+        },
+        {
+          "version": "5.6.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.22-winx64.zip"
+        },
+        {
+          "version": "5.6.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.21-winx64.zip"
+        },
+        {
+          "version": "5.6.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.20-winx64.zip"
+        },
+        {
+          "version": "5.6.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.19-winx64.zip"
+        },
+        {
+          "version": "5.6.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.17-winx64.zip"
+        },
+        {
+          "version": "5.6.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.16-winx64.zip"
+        },
+        {
+          "version": "5.6.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.15-winx64.zip"
+        },
+        {
+          "version": "5.6.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.14-winx64.zip"
+        },
+        {
+          "version": "5.6.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.13-winx64.zip"
+        },
+        {
+          "version": "5.6.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.12-winx64.zip"
+        },
+        {
+          "version": "5.6.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.11-winx64.zip"
+        },
+        {
+          "version": "5.6.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.10-winx64.zip"
+        },
+        {
+          "version": "5.5.62",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.62-winx64.zip"
+        },
+        {
+          "version": "5.5.61",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.61-winx64.zip"
+        },
+        {
+          "version": "5.5.60",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.60-winx64.zip"
+        },
+        {
+          "version": "5.5.59",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.59-winx64.zip"
+        },
+        {
+          "version": "5.5.58",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.58-winx64.zip"
+        },
+        {
+          "version": "5.5.57",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.57-winx64.zip"
+        },
+        {
+          "version": "5.5.56",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.56-winx64.zip"
+        },
+        {
+          "version": "5.5.55",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.55-winx64.zip"
+        },
+        {
+          "version": "5.5.54",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.54-winx64.zip"
+        },
+        {
+          "version": "5.5.53",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.53-winx64.zip"
+        },
+        {
+          "version": "5.5.52",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.52-winx64.zip"
+        },
+        {
+          "version": "5.5.51",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.51-winx64.zip"
+        },
+        {
+          "version": "5.5.50",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.50-winx64.zip"
+        },
+        {
+          "version": "5.5.49",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.49-winx64.zip"
+        },
+        {
+          "version": "5.5.48",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.48-winx64.zip"
+        },
+        {
+          "version": "5.5.47",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.47-winx64.zip"
+        },
+        {
+          "version": "5.5.46",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.46-winx64.zip"
+        },
+        {
+          "version": "5.5.45",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.45-winx64.zip"
+        },
+        {
+          "version": "5.5.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.44-winx64.zip"
+        },
+        {
+          "version": "5.5.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.43-winx64.zip"
+        },
+        {
+          "version": "5.5.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.42-winx64.zip"
+        },
+        {
+          "version": "5.5.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.41-winx64.zip"
+        },
+        {
+          "version": "5.5.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.40-winx64.zip"
+        },
+        {
+          "version": "5.5.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.39-winx64.zip"
+        },
+        {
+          "version": "5.5.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.38-winx64.zip"
+        },
+        {
+          "version": "5.5.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.37-winx64.zip"
+        },
+        {
+          "version": "5.5.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.36-winx64.zip"
+        },
+        {
+          "version": "5.5.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.35-winx64.zip"
+        },
+        {
+          "version": "5.5.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.34-winx64.zip"
+        },
+        {
+          "version": "5.5.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.33-winx64.zip"
+        },
+        {
+          "version": "5.5.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.32-winx64.zip"
+        },
+        {
+          "version": "5.5.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.31-winx64.zip"
+        },
+        {
+          "version": "5.5.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.30-winx64.zip"
+        },
+        {
+          "version": "5.5.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.29-winx64.zip"
+        },
+        {
+          "version": "5.5.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.28-winx64.zip"
+        },
+        {
+          "version": "5.5.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.27-winx64.zip"
+        },
+        {
+          "version": "5.5.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.24-winx64.zip"
+        },
+        {
+          "version": "5.5.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.23-winx64.zip"
+        },
+        {
+          "version": "5.5.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.22-winx64.zip"
+        },
+        {
+          "version": "5.5.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.21-winx64.zip"
+        },
+        {
+          "version": "5.5.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.20-winx64.zip"
+        },
+        {
+          "version": "5.5.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.19-winx64.zip"
+        },
+        {
+          "version": "5.5.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.18-winx64.zip"
+        },
+        {
+          "version": "5.5.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.17-winx64.zip"
+        },
+        {
+          "version": "5.5.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.16-winx64.zip"
+        },
+        {
+          "version": "5.5.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.15-winx64.zip"
+        },
+        {
+          "version": "5.5.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.14-winx64.zip"
+        },
+        {
+          "version": "5.5.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.13-winx64.zip"
+        },
+        {
+          "version": "5.5.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.12-winx64.zip"
+        },
+        {
+          "version": "5.5.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.11-winx64.zip"
+        },
+        {
+          "version": "5.5.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.10-winx64.zip"
+        },
+        {
+          "version": "5.5.9",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.9-winx64.zip"
+        },
+        {
+          "version": "5.5.8",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.8-winx64.zip"
+        },
+        {
+          "version": "5.5.25a",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.25a-winx64.zip"
+        }
+      ]
+    },
+    {
+      "os": "Linux",
+      "data": [
+        {
+          "version": "8.2.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.2.0-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.1.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.1.0-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.41-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.40-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.39-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.37-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.36-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.35-linux-glibc2.28-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.34-linux-glibc2.28-aarch64.tar"
+        },
+        {
+          "version": "8.0.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.33-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.32-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.31-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.30-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.28-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.27-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.25-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.24-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.23-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.22-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.21-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.20-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.19-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.18-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.17-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.16-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.15-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.14-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.13-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.12-linux-glibc2.12-x86_64.tar.xz"
+        },
+        {
+          "version": "8.0.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.11-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.44-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.43-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.42-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.41-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.40-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.39-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.38-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.37-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.36-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.35-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.34-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.33-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.32-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.31-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.30-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.29-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.27-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.26-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.25-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.24-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.23-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.22-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.21-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.20-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.19-linux-glibc2.12-x86_64.tar"
+        },
+        {
+          "version": "5.7.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.18-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.17-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.16-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.15-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.14-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.13-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.12-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.11-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.7.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.10-linux-glibc2.5-x86_64.tar"
+        },
+        {
+          "version": "5.6.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.36-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.35-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.34-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.33-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.32-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.31-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.30-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.29-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.28-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.27-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.26-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.25-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.24-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.23-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.22-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.21-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.20-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.19-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.17-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.16-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.15-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.14-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.13-1.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.6.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.6.12-2.linux_glibc2.5.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.55",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.55-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.54",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.54-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.53",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.53-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.52",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.52-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.51",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.51-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.50",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.50-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.49",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.49-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.48",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.48-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.47",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.47-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.46",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.46-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.45",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.45-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.44-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.43-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.42-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.41-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.40-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.39-2.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.38-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.37-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.36-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.35-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.34-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.33-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.32-1.linux2.6.x86_64.rpm-bundle.tar"
+        },
+        {
+          "version": "5.5.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.24-1.linux2.6.x86_64.tar"
+        },
+        {
+          "version": "5.5.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.23-1.linux2.6.x86_64.tar"
+        },
+        {
+          "version": "5.5.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/MySQL-5.5.22-1.linux2.6.x86_64.tar"
+        }
+      ]
+    },
+    {
+      "os": "macOS",
+      "data": [
+        {
+          "version": "8.2.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.2.0-macos13-arm64.tar"
+        },
+        {
+          "version": "8.1.0",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.1.0-macos13-arm64.tar"
+        },
+        {
+          "version": "8.0.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.41-macos15-arm64.tar"
+        },
+        {
+          "version": "8.0.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.40-macos14-arm64.tar"
+        },
+        {
+          "version": "8.0.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.39-macos14-arm64.tar"
+        },
+        {
+          "version": "8.0.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.37-macos14-arm64.tar"
+        },
+        {
+          "version": "8.0.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.36-macos14-arm64.tar"
+        },
+        {
+          "version": "8.0.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.35-macos13-arm64.tar"
+        },
+        {
+          "version": "8.0.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.34-macos13-arm64.tar"
+        },
+        {
+          "version": "8.0.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.33-macos13-arm64.tar"
+        },
+        {
+          "version": "8.0.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.32-macos13-arm64.tar"
+        },
+        {
+          "version": "8.0.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.31-macos12-arm64.tar"
+        },
+        {
+          "version": "8.0.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.30-macos12-arm64.tar"
+        },
+        {
+          "version": "8.0.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.28-macos11-arm64.tar"
+        },
+        {
+          "version": "8.0.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.27-macos11-arm64.tar"
+        },
+        {
+          "version": "8.0.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.26-macos11-arm64.tar"
+        },
+        {
+          "version": "8.0.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.25-macos11-x86_64.tar"
+        },
+        {
+          "version": "8.0.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.24-macos11-x86_64.tar"
+        },
+        {
+          "version": "8.0.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.23-macos10.15-x86_64.tar"
+        },
+        {
+          "version": "8.0.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.22-macos10.15-x86_64.tar"
+        },
+        {
+          "version": "8.0.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.21-macos10.15-x86_64.tar"
+        },
+        {
+          "version": "8.0.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.20-macos10.15-x86_64.tar"
+        },
+        {
+          "version": "8.0.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.19-macos10.15-x86_64.tar"
+        },
+        {
+          "version": "8.0.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.18-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.17-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.16-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.15-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.14-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.13-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "8.0.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.12-macos10.13-x86_64.tar"
+        },
+        {
+          "version": "8.0.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-8.0.11-macos10.13-x86_64.tar"
+        },
+        {
+          "version": "5.7.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.44-winx64.zip"
+        },
+        {
+          "version": "5.7.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.43-winx64.zip"
+        },
+        {
+          "version": "5.7.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.42-winx64.zip"
+        },
+        {
+          "version": "5.7.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.41-winx64.zip"
+        },
+        {
+          "version": "5.7.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.40-winx64.zip"
+        },
+        {
+          "version": "5.7.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.39-winx64.zip"
+        },
+        {
+          "version": "5.7.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.38-winx64.zip"
+        },
+        {
+          "version": "5.7.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.37-winx64.zip"
+        },
+        {
+          "version": "5.7.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.36-winx64.zip"
+        },
+        {
+          "version": "5.7.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.35-winx64.zip"
+        },
+        {
+          "version": "5.7.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.34-winx64.zip"
+        },
+        {
+          "version": "5.7.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.33-winx64.zip"
+        },
+        {
+          "version": "5.7.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.32-winx64.zip"
+        },
+        {
+          "version": "5.7.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.31-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.30-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.29-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.28-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.27-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.26-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.25-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.24-macos10.14-x86_64.tar"
+        },
+        {
+          "version": "5.7.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.23-macos10.13-x86_64.tar"
+        },
+        {
+          "version": "5.7.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.16-winx64.zip"
+        },
+        {
+          "version": "5.7.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.15-winx64.zip"
+        },
+        {
+          "version": "5.7.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.14-winx64.zip"
+        },
+        {
+          "version": "5.7.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.13-winx64.zip"
+        },
+        {
+          "version": "5.7.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.12-winx64.zip"
+        },
+        {
+          "version": "5.7.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.11-winx64.zip"
+        },
+        {
+          "version": "5.7.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.10-winx64.zip"
+        },
+        {
+          "version": "5.7.9",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.7.9-winx64.zip"
+        },
+        {
+          "version": "5.6.51",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.51-winx64.zip"
+        },
+        {
+          "version": "5.6.50",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.50-winx64.zip"
+        },
+        {
+          "version": "5.6.49",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.49-winx64.zip"
+        },
+        {
+          "version": "5.6.48",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.48-winx64.zip"
+        },
+        {
+          "version": "5.6.47",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.47-winx64.zip"
+        },
+        {
+          "version": "5.6.46",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.46-winx64.zip"
+        },
+        {
+          "version": "5.6.45",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.45-winx64.zip"
+        },
+        {
+          "version": "5.6.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.44-winx64.zip"
+        },
+        {
+          "version": "5.6.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.43-winx64.zip"
+        },
+        {
+          "version": "5.6.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.42-winx64.zip"
+        },
+        {
+          "version": "5.6.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.34-winx64.zip"
+        },
+        {
+          "version": "5.6.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.33-winx64.zip"
+        },
+        {
+          "version": "5.6.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.32-winx64.zip"
+        },
+        {
+          "version": "5.6.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.31-winx64.zip"
+        },
+        {
+          "version": "5.6.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.30-winx64.zip"
+        },
+        {
+          "version": "5.6.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.29-winx64.zip"
+        },
+        {
+          "version": "5.6.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.28-winx64.zip"
+        },
+        {
+          "version": "5.6.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.27-winx64.zip"
+        },
+        {
+          "version": "5.6.26",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.26-winx64.zip"
+        },
+        {
+          "version": "5.6.25",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.25-winx64.zip"
+        },
+        {
+          "version": "5.6.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.24-winx64.zip"
+        },
+        {
+          "version": "5.6.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.23-winx64.zip"
+        },
+        {
+          "version": "5.6.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.22-winx64.zip"
+        },
+        {
+          "version": "5.6.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.21-winx64.zip"
+        },
+        {
+          "version": "5.6.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.20-winx64.zip"
+        },
+        {
+          "version": "5.6.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.19-winx64.zip"
+        },
+        {
+          "version": "5.6.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.17-winx64.zip"
+        },
+        {
+          "version": "5.6.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.16-winx64.zip"
+        },
+        {
+          "version": "5.6.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.15-winx64.zip"
+        },
+        {
+          "version": "5.6.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.14-winx64.zip"
+        },
+        {
+          "version": "5.6.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.13-winx64.zip"
+        },
+        {
+          "version": "5.6.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.12-winx64.zip"
+        },
+        {
+          "version": "5.6.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.11-winx64.zip"
+        },
+        {
+          "version": "5.6.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.6.10-winx64.zip"
+        },
+        {
+          "version": "5.5.62",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.62-winx64.zip"
+        },
+        {
+          "version": "5.5.61",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.61-winx64.zip"
+        },
+        {
+          "version": "5.5.60",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.60-winx64.zip"
+        },
+        {
+          "version": "5.5.59",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.59-winx64.zip"
+        },
+        {
+          "version": "5.5.58",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.58-winx64.zip"
+        },
+        {
+          "version": "5.5.57",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.57-winx64.zip"
+        },
+        {
+          "version": "5.5.56",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.56-winx64.zip"
+        },
+        {
+          "version": "5.5.55",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.55-winx64.zip"
+        },
+        {
+          "version": "5.5.54",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.54-winx64.zip"
+        },
+        {
+          "version": "5.5.53",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.53-winx64.zip"
+        },
+        {
+          "version": "5.5.52",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.52-winx64.zip"
+        },
+        {
+          "version": "5.5.51",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.51-winx64.zip"
+        },
+        {
+          "version": "5.5.50",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.50-winx64.zip"
+        },
+        {
+          "version": "5.5.49",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.49-winx64.zip"
+        },
+        {
+          "version": "5.5.48",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.48-winx64.zip"
+        },
+        {
+          "version": "5.5.47",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.47-winx64.zip"
+        },
+        {
+          "version": "5.5.46",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.46-winx64.zip"
+        },
+        {
+          "version": "5.5.45",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.45-winx64.zip"
+        },
+        {
+          "version": "5.5.44",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.44-winx64.zip"
+        },
+        {
+          "version": "5.5.43",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.43-winx64.zip"
+        },
+        {
+          "version": "5.5.42",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.42-winx64.zip"
+        },
+        {
+          "version": "5.5.41",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.41-winx64.zip"
+        },
+        {
+          "version": "5.5.40",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.40-winx64.zip"
+        },
+        {
+          "version": "5.5.39",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.39-winx64.zip"
+        },
+        {
+          "version": "5.5.38",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.38-winx64.zip"
+        },
+        {
+          "version": "5.5.37",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.37-winx64.zip"
+        },
+        {
+          "version": "5.5.36",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.36-winx64.zip"
+        },
+        {
+          "version": "5.5.35",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.35-winx64.zip"
+        },
+        {
+          "version": "5.5.34",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.34-winx64.zip"
+        },
+        {
+          "version": "5.5.33",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.33-winx64.zip"
+        },
+        {
+          "version": "5.5.32",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.32-winx64.zip"
+        },
+        {
+          "version": "5.5.31",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.31-winx64.zip"
+        },
+        {
+          "version": "5.5.30",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.30-winx64.zip"
+        },
+        {
+          "version": "5.5.29",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.29-winx64.zip"
+        },
+        {
+          "version": "5.5.28",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.28-winx64.zip"
+        },
+        {
+          "version": "5.5.27",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.27-winx64.zip"
+        },
+        {
+          "version": "5.5.24",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.24-winx64.zip"
+        },
+        {
+          "version": "5.5.23",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.23-winx64.zip"
+        },
+        {
+          "version": "5.5.22",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.22-winx64.zip"
+        },
+        {
+          "version": "5.5.21",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.21-winx64.zip"
+        },
+        {
+          "version": "5.5.20",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.20-winx64.zip"
+        },
+        {
+          "version": "5.5.19",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.19-winx64.zip"
+        },
+        {
+          "version": "5.5.18",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.18-winx64.zip"
+        },
+        {
+          "version": "5.5.17",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.17-winx64.zip"
+        },
+        {
+          "version": "5.5.16",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.16-winx64.zip"
+        },
+        {
+          "version": "5.5.15",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.15-winx64.zip"
+        },
+        {
+          "version": "5.5.14",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.14-winx64.zip"
+        },
+        {
+          "version": "5.5.13",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.13-winx64.zip"
+        },
+        {
+          "version": "5.5.12",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.12-winx64.zip"
+        },
+        {
+          "version": "5.5.11",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.11-winx64.zip"
+        },
+        {
+          "version": "5.5.10",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.10-winx64.zip"
+        },
+        {
+          "version": "5.5.9",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.9-winx64.zip"
+        },
+        {
+          "version": "5.5.8",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.8-winx64.zip"
+        },
+        {
+          "version": "5.5.25a",
+          "gpg": "",
+          "link": "https://downloads.mysql.com/archives/get/p/23/file/mysql-5.5.25a-winx64.zip"
+        }
+      ]
+    }
+  ]
+}

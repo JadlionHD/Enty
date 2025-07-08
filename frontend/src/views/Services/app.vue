@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import MainSidebar from '@/components/MainSidebar.vue'
-import MainLayout from '@/layouts/MainLayout.vue'
-import { SERVICE_APPS } from '@/const'
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import MainSidebar from '@/components/MainSidebar.vue';
+import MainLayout from '@/layouts/MainLayout.vue';
+import { SERVICE_APPS } from '@/const';
+import { computed, ref } from 'vue';
+import { useRoute } from 'vue-router';
 
-import type { TabsItem } from '@nuxt/ui'
+import type { ChipProps, InputMenuItem, TabsItem } from '@nuxt/ui';
+type Sizes = ChipProps['size'];
 
 const tabs: TabsItem[] = [
   {
     label: 'Details',
     slot: 'details' as const,
     icon: 'i-lucide-book',
+  },
+  {
+    label: 'Versions',
+    slot: 'versions' as const,
+    icon: 'i-lucide-layers',
   },
   {
     label: 'Options',
@@ -23,12 +29,37 @@ const tabs: TabsItem[] = [
     slot: 'terminal' as const,
     icon: 'i-lucide-terminal',
   },
-]
-const route = useRoute()
+];
+
+const route = useRoute();
 
 const item = computed(() => {
-  return SERVICE_APPS.find((v) => v.name === route.params.app)
-})
+  return SERVICE_APPS.find((v) => v.name === route.params.app);
+});
+
+// TEST INSTALLED VERSION
+const installed = ref(['1.0.2', '1.0.4']);
+const versions = ref(['1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.0.4']);
+
+const getUserInstalledVersions = () =>
+  versions.value.map((version) => ({
+    label: version,
+    chip: installed.value.includes(version)
+      ? {
+          color: 'success' as const,
+        }
+      : {
+          color: 'neutral' as const,
+        },
+  })) satisfies InputMenuItem[];
+
+const appVersions = computed(() => {
+  return getUserInstalledVersions();
+});
+
+const version = ref(
+  getUserInstalledVersions().find((v) => v.label === '1.0.0') || getUserInstalledVersions()[0],
+);
 </script>
 
 <template>
@@ -50,9 +81,9 @@ const item = computed(() => {
                 <div class="flex flex-col gap-y-1">
                   <h1 class="font-bold text-3xl">{{ item.label }}</h1>
                   <p class="text-muted text-base">{{ item.description }}</p>
-                  <div class="flex gap-x-2">
-                    <UButton size="sm" variant="solid">Install</UButton>
-                    <UButton size="sm" variant="ghost">Version 1.0.0</UButton>
+                  <div class="flex gap-x-2 w-full">
+                    <UButton size="md" variant="solid">Start</UButton>
+                    <!-- <UButton size="md" variant="outline">Remove</UButton> -->
                   </div>
                 </div>
               </div>
@@ -60,6 +91,10 @@ const item = computed(() => {
               <UTabs :items="tabs" class="w-full" variant="link" :ui="{ trigger: 'grow' }">
                 <template #details="{ item }">
                   <p>This is the details tab.</p>
+                </template>
+
+                <template #versions="{ item }">
+                  <p>This is the versions tab.</p>
                 </template>
 
                 <template #options="{ item }">
