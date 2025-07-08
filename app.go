@@ -35,5 +35,5 @@ func (a *App) GetMySqlConfig() (*config.ConfigVersionMySQL, error) {
 		return nil, err
 	}
 
-	return &conf, nil
+	return conf, nil
 }

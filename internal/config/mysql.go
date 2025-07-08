@@ -29,17 +29,17 @@ type ConfigDataMySQL struct {
 	Link    string  `json:"link"`
 }
 
-func ReadConfig() (ConfigVersionMySQL, error) {
+func ReadConfig() (*ConfigVersionMySQL, error) {
 	var config ConfigVersionMySQL
 
 	file, err := os.Open("config/mysql.json")
 	if err != nil {
 		slog.Error("failed to read config", "error", err)
-		os.Exit(-1)
+		return nil, err
 	}
 	defer file.Close()
 
 	jsonParser := json.NewDecoder(file)
 	jsonParser.Decode(&config)
-	return config, nil
+	return &config, nil
 }
