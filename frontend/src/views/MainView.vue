@@ -5,6 +5,7 @@ import { onMounted } from 'vue';
 import { GetMySqlConfig } from '../../wailsjs/go/main/App';
 
 onMounted(async () => {
+  // TODO: works fine but need to handle this later on mysqlversion viewer
   console.log('test mysql', await GetMySqlConfig());
 });
 </script>

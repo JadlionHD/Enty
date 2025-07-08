@@ -28,7 +28,12 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) GetMySqlConfig() config.ConfigVersionMySQL {
-	conf, _ := config.ReadConfig()
-	return conf
+func (a *App) GetMySqlConfig() (*config.ConfigVersionMySQL, error) {
+	conf, err := config.ReadConfig()
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &conf, nil
 }
