@@ -1,5 +1,9 @@
 export type ServiceInstanceState = 'running' | 'stopped' | 'none';
 
+export interface PiniaConfigStore {
+  mysql?: ConfigVersionMySQL;
+}
+
 export interface ConfigVersionMySQL {
   mysql: ConfigArchInfoMySQL[];
 }

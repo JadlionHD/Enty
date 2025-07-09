@@ -6,7 +6,6 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { ChipProps, InputMenuItem, TabsItem } from '@nuxt/ui';
-type Sizes = ChipProps['size'];
 
 const tabs: TabsItem[] = [
   {
@@ -65,10 +64,6 @@ const version = ref(
 <template>
   <div>
     <MainLayout>
-      <template #left>
-        <MainSidebar />
-      </template>
-
       <template #center>
         <div class="w-full">
           <div v-if="!!item" class="p-4">
@@ -89,19 +84,21 @@ const version = ref(
               </div>
 
               <UTabs :items="tabs" class="w-full" variant="link" :ui="{ trigger: 'grow' }">
-                <template #details="{ item }">
+                <template #details="{}">
                   <p>This is the details tab.</p>
                 </template>
 
-                <template #versions="{ item }">
-                  <p>This is the versions tab.</p>
+                <template #versions="{}">
+                  <template v-if="item.name === 'mysql'">
+                    <MySQLVersion />
+                  </template>
                 </template>
 
-                <template #options="{ item }">
+                <template #options="{}">
                   <p>This is the config tab.</p>
                 </template>
 
-                <template #terminal="{ item }">
+                <template #terminal="{}">
                   <p>This is the terminal tab.</p>
                 </template>
               </UTabs>

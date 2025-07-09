@@ -1,22 +1,11 @@
 <script setup lang="ts">
 import MainSidebar from '@/components/MainSidebar.vue';
 import MainLayout from '@/layouts/MainLayout.vue';
-import { onMounted } from 'vue';
-import { GetMySqlConfig } from '../../wailsjs/go/main/App';
-
-onMounted(async () => {
-  // TODO: works fine but need to handle this later on mysqlversion viewer
-  console.log('test mysql', await GetMySqlConfig());
-});
 </script>
 
 <template>
   <div>
     <MainLayout>
-      <template #left>
-        <MainSidebar />
-      </template>
-
       <template #center>
         <div class="w-full min-h-screen flex flex-col gap-y-4 justify-center items-center">
           <div class="text-muted">Nothing in here, lets have a picnic with Enty</div>
