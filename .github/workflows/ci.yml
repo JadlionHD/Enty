@@ -1,0 +1,36 @@
+name: Wails build
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - "**"
+    paths-ignore:
+      - "**/*.md"
+      - LICENSE
+      - "**/*.gitignore"
+      - .editorconfig
+  pull_request: null
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        build:
+          [
+            { name: Enty, platform: linux/amd64, os: ubuntu-latest },
+            { name: Enty, platform: windows/amd64, os: windows-latest },
+            { name: Enty, platform: darwin/universal, os: macos-latest }
+          ]
+    runs-on: ${{ matrix.build.os }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - uses: dAppServer/wails-build-action@v3
+        with:
+          build-name: ${{ matrix.build.name }}
+          build-platform: ${{ matrix.build.platform }}
+          build-obfuscate: true
