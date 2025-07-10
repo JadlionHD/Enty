@@ -7,7 +7,7 @@ const mode = useColorMode();
 
 <template>
   <div
-    class="w-full h-8 bg-muted py-2 px-3 flex items-center justify-between fixed top-0 z-50"
+    class="w-full h-8 bg-muted py-2 px-3 flex items-center justify-between fixed top-0 z-10"
     style="--wails-draggable: drag"
   >
     <div class="font-bold text-xl">Enty</div>

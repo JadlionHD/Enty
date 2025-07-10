@@ -95,7 +95,7 @@ const filteredData = computed(() => {
 
 <template>
   <div class="flex flex-col flex-1 w-full">
-    <div class="flex px-4 py-3.5 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex px-4 py-3.5">
       <UInput
         v-model="searchInput"
         class="max-w-sm"
@@ -104,16 +104,13 @@ const filteredData = computed(() => {
       />
     </div>
 
-    <div class="overflow-auto max-h-96">
+    <div class="overflow-auto max-h-64 z-0">
       <UTable
         ref="table"
         :data="filteredData"
         :columns="columns"
-        :empty-state="{
-          label: 'No versions found.',
-          description: 'Try adjusting your search criteria.',
-        }"
-      />
+        empty="No versions found."
+      ></UTable>
     </div>
   </div>
 </template>
