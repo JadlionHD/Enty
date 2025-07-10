@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { useColorMode } from '@vueuse/core';
+import { WindowToggleMaximise, WindowMinimise, Quit } from '../../wailsjs/runtime/runtime';
 
 const mode = useColorMode();
 </script>
@@ -18,9 +19,21 @@ const mode = useColorMode();
         variant="ghost"
         @click="mode = mode === 'dark' ? 'light' : 'dark'"
       />
-      <UButton size="sm" variant="ghost" color="info" icon="i-lucide-minus"></UButton>
-      <UButton size="sm" variant="ghost" color="info" icon="i-lucide-square"></UButton>
-      <UButton size="sm" variant="ghost" color="info" icon="i-lucide-x"></UButton>
+      <UButton
+        size="sm"
+        variant="ghost"
+        color="info"
+        icon="i-lucide-minus"
+        @click="WindowMinimise()"
+      ></UButton>
+      <UButton
+        size="sm"
+        variant="ghost"
+        color="info"
+        icon="i-lucide-square"
+        @click="WindowToggleMaximise()"
+      ></UButton>
+      <UButton size="sm" variant="ghost" color="info" icon="i-lucide-x" @click="Quit()"></UButton>
     </div>
   </div>
 </template>

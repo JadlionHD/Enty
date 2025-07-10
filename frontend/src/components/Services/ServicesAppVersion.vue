@@ -2,11 +2,13 @@
 import { h, resolveComponent, ref, onMounted, computed, watch } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import type { TableColumn } from '@nuxt/ui';
+import { DownloadFile } from '../../../wailsjs/go/utils/utils';
 
 const UBadge = resolveComponent('UBadge');
 const UButton = resolveComponent('UButton');
 
 interface Props {
+  name: string;
   items: {
     version: string;
     downloadUrl: string;
@@ -41,7 +43,12 @@ const columns: TableColumn<AppVersion>[] = [
             variant: 'outline',
             icon: 'i-heroicons-arrow-down-tray',
             onClick: () => {
-              window.open(row.getValue('downloadUrl'), '_blank');
+              // window.open(row.getValue('downloadUrl'), '_blank');
+
+              const name = `${props.name}-${row.getValue('version')}`;
+              const url = row.getValue('downloadUrl');
+              console.log({ url }, row);
+              DownloadFile(name, `temp/${name}.zip`, url as string);
             },
           },
           () => 'Download',

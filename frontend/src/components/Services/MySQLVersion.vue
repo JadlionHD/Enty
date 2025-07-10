@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, onUnmounted, ref } from 'vue';
 import ServicesAppVersion from './ServicesAppVersion.vue';
 import type { ConfigVersionMySQL } from '@/types';
 import { GetMySqlConfig } from '../../../wailsjs/go/main/App';
 import { GetUserOS } from '../../../wailsjs/go/utils/utils';
+import { EventsOn, EventsOff } from '../../../wailsjs/runtime/runtime';
 
 const osMap = {
   windows: 'Windows',
@@ -26,7 +27,7 @@ onMounted(async () => {
         // Transform the data to match ServicesAppVersion props
         items.value = osData.data.map((item) => ({
           version: item.version,
-          downloadUrl: (item as any).downloadUrl || (item as any).url || '#', // Handle different property names
+          downloadUrl: item.link, // Handle different property names
         }));
       }
     }
@@ -36,12 +37,33 @@ onMounted(async () => {
     isLoading.value = false;
   }
 });
+
+onMounted(() => {
+  EventsOn('download-file', (name, totalBytes, downloadedBytes) => {
+    const progress = (100 * downloadedBytes) / totalBytes;
+
+    console.log({
+      name,
+      totalBytes,
+      downloadedBytes,
+      progress,
+    });
+  });
+});
+
+onUnmounted(() => {
+  EventsOff('download-file');
+});
 </script>
 
 <template>
   <div>
-    <div v-if="isLoading">Loading...</div>
-    <ServicesAppVersion v-else-if="items.length > 0" :items="items"></ServicesAppVersion>
+    <div v-if="isLoading" class="text-center font-bold">Loading...</div>
+    <ServicesAppVersion
+      v-else-if="items.length > 0"
+      :items="items"
+      name="mysql"
+    ></ServicesAppVersion>
     <div v-else>No versions available</div>
   </div>
 </template>
