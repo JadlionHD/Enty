@@ -11,13 +11,12 @@ import MotionResolver from 'motion-v/resolver';
 export default defineConfig({
   plugins: [
     vue(),
-    ui(),
-    tailwindcss(),
-    // TODO: duplicate auto import components
-    Components({
-      dts: true,
-      resolvers: [MotionResolver()],
+    ui({
+      autoImport: {
+        resolvers: [MotionResolver()],
+      },
     }),
+    tailwindcss(),
   ],
   resolve: {
     alias: {
