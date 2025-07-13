@@ -2,8 +2,8 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 import ServicesAppVersion from './ServicesAppVersion.vue';
 import type { ConfigVersionMySQL } from '@/types';
-import { GetMySqlConfig } from '../../../wailsjs/go/main/App';
-import { GetUserOS } from '../../../wailsjs/go/utils/utils';
+import { GetMySqlConfig } from '../../../wailsjs/go/config/configs';
+import { GetTempDirectory, GetUserOS } from '../../../wailsjs/go/utils/utils';
 import { EventsOn, EventsOff } from '../../../wailsjs/runtime/runtime';
 
 const osMap = {
@@ -18,6 +18,8 @@ const isLoading = ref(true);
 onMounted(async () => {
   try {
     const OS = await GetUserOS();
+    const dir = await GetTempDirectory();
+    console.log(dir);
     const data = (await GetMySqlConfig()) as ConfigVersionMySQL;
     const currentOs = osMap[OS as keyof typeof osMap];
 
@@ -38,22 +40,22 @@ onMounted(async () => {
   }
 });
 
-onMounted(() => {
-  EventsOn('download-file', (name, totalBytes, downloadedBytes) => {
-    const progress = (100 * downloadedBytes) / totalBytes;
+// onMounted(() => {
+//   EventsOn('download-file', (name, totalBytes, downloadedBytes) => {
+//     const progress = (100 * downloadedBytes) / totalBytes;
 
-    console.log({
-      name,
-      totalBytes,
-      downloadedBytes,
-      progress,
-    });
-  });
-});
+//     console.log({
+//       name,
+//       totalBytes,
+//       downloadedBytes,
+//       progress,
+//     });
+//   });
+// });
 
-onUnmounted(() => {
-  EventsOff('download-file');
-});
+// onUnmounted(() => {
+//   EventsOff('download-file');
+// });
 </script>
 
 <template>

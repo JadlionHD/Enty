@@ -47,8 +47,8 @@ const columns: TableColumn<AppVersion>[] = [
 
               const name = `${props.name}-${row.getValue('version')}`;
               const url = row.getValue('downloadUrl');
-              console.log({ url }, row);
-              DownloadFile(name, `temp/${name}.zip`, url as string);
+              console.log({ url, name }, row);
+              // DownloadFile(name, `temp/${name}.zip`, url as string);
             },
           },
           () => 'Download',

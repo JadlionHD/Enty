@@ -11,15 +11,14 @@ import (
 
 func (u *utils) DownloadFile(name string, filepath string, url string) (err error) {
 
-	if _, err := os.Stat("temp"); os.IsNotExist(err) {
-		//not exist
+	exist := u.IsDirExist(PATH_TEMP)
 
-		os.Mkdir("temp", os.ModePerm)
-
+	if !exist {
+		u.Mkdir(PATH_TEMP)
 	}
 
 	// Create the file
-	out, err := os.Create(fmt.Sprintf("temp/%s", name))
+	out, err := os.Create(fmt.Sprintf("%s/%s", PATH_TEMP, name))
 	if err != nil {
 		return err
 	}
