@@ -3,6 +3,7 @@ import { h, resolveComponent, ref, onMounted, computed, watch } from 'vue';
 import { useInfiniteScroll } from '@vueuse/core';
 import type { TableColumn } from '@nuxt/ui';
 import { DownloadFile } from '../../../wailsjs/go/utils/utils';
+import { useDownloadStore } from '@/stores/download';
 
 const UBadge = resolveComponent('UBadge');
 const UButton = resolveComponent('UButton');
@@ -22,8 +23,8 @@ type AppVersion = {
   downloadUrl: string;
 };
 
-// Use computed for reactive data
 const data = computed(() => props.items);
+const download = useDownloadStore();
 
 const columns: TableColumn<AppVersion>[] = [
   {
@@ -42,13 +43,24 @@ const columns: TableColumn<AppVersion>[] = [
             size: 'sm',
             variant: 'outline',
             icon: 'i-heroicons-arrow-down-tray',
-            onClick: () => {
+            onClick: async () => {
               // window.open(row.getValue('downloadUrl'), '_blank');
 
               const name = `${props.name}-${row.getValue('version')}`;
               const url = row.getValue('downloadUrl');
               console.log({ url, name }, row);
-              // DownloadFile(name, `temp/${name}.zip`, url as string);
+
+              try {
+                const resultDownload = await download.download(
+                  name,
+                  `${name}.zip`,
+                  url as string,
+                  32,
+                );
+              } catch (e) {
+                console.error('error while downloading', e);
+                download.clean();
+              }
             },
           },
           () => 'Download',

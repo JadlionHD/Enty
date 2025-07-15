@@ -64,7 +64,6 @@ const items = computed<NavigationMenuItem[][]>(() => {
 
 const isCollapsed = computed<boolean>(() => width.value < 640);
 
-console.log(items.value);
 // const items = ref<NavigationMenuItem[][]>([])
 </script>
 
