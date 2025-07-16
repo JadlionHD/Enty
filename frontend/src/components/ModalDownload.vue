@@ -27,12 +27,10 @@ onUnmounted(() => {
 
       <template #body>
         <div class="flex flex-col gap-y-4">
-          <!-- <UCard v-for="i in 1">
-            <ModalDownloadProgress :value="Math.floor(Math.random() * 100)" />
-          </UCard> -->
-          <UCard v-for="item in download.files">
+          <UCard v-for="item in download.files" v-if="!!download.files.length">
             <ModalDownloadProgress :title="item.name" :value="item.progress" />
           </UCard>
+          <div v-else>No downloads available, everything clear here</div>
         </div>
       </template>
     </UModal>

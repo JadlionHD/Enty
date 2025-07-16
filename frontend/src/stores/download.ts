@@ -14,6 +14,7 @@ export const useDownloadStore = defineStore('download', () => {
   const files = ref<DownloadFile[]>([]);
   // TODO: next this
   const isDownloading = ref(false);
+  const toast = useToast();
 
   const on = (
     cb: (name: string, totalBytes: number, downloadedBytes: number, progress: number) => void,
@@ -46,11 +47,19 @@ export const useDownloadStore = defineStore('download', () => {
 
     // Clean up file when download is finished
     EventsOn('finish-download-file', (name: string) => {
+      toast.add({
+        title: `Successfully installed ${name}`,
+        icon: 'i-lucide-check',
+      });
       clean();
     });
 
     // Clean up file when download is cancelled
     EventsOn('download-cancelled', (name: string) => {
+      toast.add({
+        title: `Cancelled installing ${name}`,
+        icon: 'i-lucide-file-x-2',
+      });
       clean();
     });
   };
@@ -63,6 +72,10 @@ export const useDownloadStore = defineStore('download', () => {
   };
 
   const download = async (name: string, fileName: string, url: string, buffer?: number) => {
+    toast.add({
+      title: `Start downloading ${name}`,
+      icon: 'i-lucide-file-down',
+    });
     return await DownloadFile(name, fileName, url, buffer ?? 32);
   };
 
@@ -73,5 +86,5 @@ export const useDownloadStore = defineStore('download', () => {
   const clean = () => {
     files.value = [];
   };
-  return { files, isDownloading, on, off, download, cancel, clean };
+  return { files, toast, isDownloading, on, off, download, cancel, clean };
 });

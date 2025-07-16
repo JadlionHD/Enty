@@ -39,23 +39,6 @@ onMounted(async () => {
     isLoading.value = false;
   }
 });
-
-// onMounted(() => {
-//   EventsOn('download-file', (name, totalBytes, downloadedBytes) => {
-//     const progress = (100 * downloadedBytes) / totalBytes;
-
-//     console.log({
-//       name,
-//       totalBytes,
-//       downloadedBytes,
-//       progress,
-//     });
-//   });
-// });
-
-// onUnmounted(() => {
-//   EventsOff('download-file');
-// });
 </script>
 
 <template>
