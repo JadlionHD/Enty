@@ -5,16 +5,22 @@ import (
 	"io"
 	gosruntime "runtime"
 	"sync"
+	"time"
 
 	"github.com/aymanbagabas/go-pty"
 )
 
 // TerminalSession manages a single PTY terminal session
 type TerminalSession struct {
-	pty       pty.Pty
-	cmd       *pty.Cmd
-	mutex     sync.Mutex
-	isRunning bool
+	pty           pty.Pty
+	cmd           *pty.Cmd
+	mutex         sync.Mutex
+	isRunning     bool
+	sessionID     string
+	terminalType  string
+	lastActivity  time.Time
+	timeoutTimer  *time.Timer
+	onTimeout     func(sessionID string)
 }
 
 // NewTerminalSession creates a new terminal session
@@ -22,6 +28,21 @@ func NewTerminalSession() *TerminalSession {
 	return &TerminalSession{
 		isRunning: false,
 	}
+}
+
+// NewTerminalSessionWithID creates a new terminal session with specific ID and type
+func NewTerminalSessionWithID(sessionID, terminalType string) *TerminalSession {
+	return &TerminalSession{
+		isRunning:    false,
+		sessionID:    sessionID,
+		terminalType: terminalType,
+		lastActivity: time.Now(),
+	}
+}
+
+// SetTimeoutCallback sets the callback function for session timeout
+func (ts *TerminalSession) SetTimeoutCallback(callback func(sessionID string)) {
+	ts.onTimeout = callback
 }
 
 // Start initializes and starts a PTY terminal session
@@ -33,8 +54,8 @@ func (ts *TerminalSession) Start() error {
 		return fmt.Errorf("terminal is already running")
 	}
 
-	// Determine shell based on OS
-	shell, args := GetPlatformShell()
+	// Determine shell based on terminal type or platform default
+	shell, args := ts.getShellCommand()
 
 	// Create PTY
 	ptyInstance, err := pty.New()
@@ -55,6 +76,10 @@ func (ts *TerminalSession) Start() error {
 	ts.pty = ptyInstance
 	ts.cmd = cmd
 	ts.isRunning = true
+	ts.lastActivity = time.Now()
+	
+	// Start timeout timer (60 minutes)
+	ts.startTimeoutTimer()
 
 	return nil
 }
@@ -68,6 +93,10 @@ func (ts *TerminalSession) Write(input string) error {
 		return fmt.Errorf("terminal is not running")
 	}
 
+	// Update last activity time
+	ts.lastActivity = time.Now()
+	ts.resetTimeoutTimer()
+
 	_, err := ts.pty.Write([]byte(input))
 	return err
 }
@@ -79,6 +108,12 @@ func (ts *TerminalSession) Stop() error {
 
 	if !ts.isRunning {
 		return nil
+	}
+
+	// Stop timeout timer
+	if ts.timeoutTimer != nil {
+		ts.timeoutTimer.Stop()
+		ts.timeoutTimer = nil
 	}
 
 	if ts.pty != nil {
@@ -173,6 +208,12 @@ func (ts *TerminalSession) StartReadLoop(onData TerminalReadCallback, onExit Ter
 			if n > 0 && onData != nil {
 				data := string(buf[:n])
 				onData(data)
+				
+				// Update activity time
+				ts.mutex.Lock()
+				ts.lastActivity = time.Now()
+				ts.resetTimeoutTimer()
+				ts.mutex.Unlock()
 			}
 		}
 
@@ -185,4 +226,137 @@ func (ts *TerminalSession) StartReadLoop(onData TerminalReadCallback, onExit Ter
 			onExit("Terminal session ended")
 		}
 	}()
+}
+
+// getShellCommand returns the appropriate shell command based on terminal type
+func (ts *TerminalSession) getShellCommand() (string, []string) {
+	switch ts.terminalType {
+	case "cmd":
+		return "cmd.exe", []string{}
+	case "powershell":
+		return "powershell.exe", []string{}
+	case "bash":
+		return "/bin/bash", []string{}
+	default:
+		// Use platform default
+		return GetPlatformShell()
+	}
+}
+
+// startTimeoutTimer starts or resets the 60-minute inactivity timeout timer
+func (ts *TerminalSession) startTimeoutTimer() {
+	if ts.timeoutTimer != nil {
+		ts.timeoutTimer.Stop()
+	}
+	
+	ts.timeoutTimer = time.AfterFunc(60*time.Minute, func() {
+		ts.mutex.Lock()
+		sessionID := ts.sessionID
+		ts.mutex.Unlock()
+		
+		// Stop the session
+		ts.Stop()
+		
+		// Notify callback if set
+		if ts.onTimeout != nil {
+			ts.onTimeout(sessionID)
+		}
+	})
+}
+
+// resetTimeoutTimer resets the timeout timer on activity
+func (ts *TerminalSession) resetTimeoutTimer() {
+	ts.startTimeoutTimer()
+}
+
+// GetSessionInfo returns session information
+func (ts *TerminalSession) GetSessionInfo() (sessionID, terminalType string, lastActivity time.Time) {
+	ts.mutex.Lock()
+	defer ts.mutex.Unlock()
+	return ts.sessionID, ts.terminalType, ts.lastActivity
+}
+
+// TerminalManager manages multiple terminal sessions
+type TerminalManager struct {
+	sessions map[string]*TerminalSession
+	mutex    sync.RWMutex
+}
+
+// NewTerminalManager creates a new terminal manager
+func NewTerminalManager() *TerminalManager {
+	return &TerminalManager{
+		sessions: make(map[string]*TerminalSession),
+	}
+}
+
+// CreateSession creates a new terminal session
+func (tm *TerminalManager) CreateSession(sessionID, terminalType string) (*TerminalSession, error) {
+	tm.mutex.Lock()
+	defer tm.mutex.Unlock()
+
+	if _, exists := tm.sessions[sessionID]; exists {
+		return nil, fmt.Errorf("session %s already exists", sessionID)
+	}
+
+	session := NewTerminalSessionWithID(sessionID, terminalType)
+	session.SetTimeoutCallback(func(id string) {
+		tm.removeSession(id)
+	})
+	
+	tm.sessions[sessionID] = session
+	return session, nil
+}
+
+// GetSession retrieves an existing session
+func (tm *TerminalManager) GetSession(sessionID string) (*TerminalSession, error) {
+	tm.mutex.RLock()
+	defer tm.mutex.RUnlock()
+
+	session, exists := tm.sessions[sessionID]
+	if !exists {
+		return nil, fmt.Errorf("session %s not found", sessionID)
+	}
+
+	return session, nil
+}
+
+// RemoveSession removes and stops a session
+func (tm *TerminalManager) RemoveSession(sessionID string) error {
+	tm.mutex.Lock()
+	defer tm.mutex.Unlock()
+	return tm.removeSession(sessionID)
+}
+
+// removeSession removes a session (internal, assumes lock is held)
+func (tm *TerminalManager) removeSession(sessionID string) error {
+	session, exists := tm.sessions[sessionID]
+	if !exists {
+		return fmt.Errorf("session %s not found", sessionID)
+	}
+
+	session.Stop()
+	delete(tm.sessions, sessionID)
+	return nil
+}
+
+// ListSessions returns all active session IDs
+func (tm *TerminalManager) ListSessions() []string {
+	tm.mutex.RLock()
+	defer tm.mutex.RUnlock()
+
+	sessionIDs := make([]string, 0, len(tm.sessions))
+	for id := range tm.sessions {
+		sessionIDs = append(sessionIDs, id)
+	}
+	return sessionIDs
+}
+
+// CleanupAll stops and removes all sessions
+func (tm *TerminalManager) CleanupAll() {
+	tm.mutex.Lock()
+	defer tm.mutex.Unlock()
+
+	for id := range tm.sessions {
+		tm.removeSession(id)
+	}
 }
