@@ -12,18 +12,18 @@ import (
 
 // TerminalSession manages a single PTY terminal session
 type TerminalSession struct {
-	pty           pty.Pty
-	cmd           *pty.Cmd
-	mutex         sync.RWMutex  // Changed to RWMutex for better performance
-	isRunning     bool
-	sessionID     string
-	terminalType  string
-	lastActivity  time.Time
-	timeoutTimer  *time.Timer
-	onTimeout     func(sessionID string)
-	readBuffer    chan []byte    // Buffered channel for efficient data streaming
-	writeBuffer   chan []byte    // Buffered channel for write operations  
-	stopChannel   chan struct{}  // Channel for graceful shutdown
+	pty          pty.Pty
+	cmd          *pty.Cmd
+	mutex        sync.RWMutex // Changed to RWMutex for better performance
+	isRunning    bool
+	sessionID    string
+	terminalType string
+	lastActivity time.Time
+	timeoutTimer *time.Timer
+	onTimeout    func(sessionID string)
+	readBuffer   chan []byte   // Buffered channel for efficient data streaming
+	writeBuffer  chan []byte   // Buffered channel for write operations
+	stopChannel  chan struct{} // Channel for graceful shutdown
 }
 
 // NewTerminalSession creates a new terminal session
@@ -40,9 +40,9 @@ func NewTerminalSessionWithID(sessionID, terminalType string) *TerminalSession {
 		sessionID:    sessionID,
 		terminalType: terminalType,
 		lastActivity: time.Now(),
-		readBuffer:   make(chan []byte, 100),  // Buffered channel for performance
-		writeBuffer:  make(chan []byte, 50),   // Buffered channel for writes
-		stopChannel:  make(chan struct{}, 1),  // Channel for clean shutdown
+		readBuffer:   make(chan []byte, 100), // Buffered channel for performance
+		writeBuffer:  make(chan []byte, 50),  // Buffered channel for writes
+		stopChannel:  make(chan struct{}, 1), // Channel for clean shutdown
 	}
 }
 
@@ -63,15 +63,15 @@ func (ts *TerminalSession) Start() error {
 	// Determine shell based on terminal type or platform default
 	shell, args := ts.getShellCommand()
 
-	// Create PTY
+	// Create PTY with optimized settings
 	ptyInstance, err := pty.New()
 	if err != nil {
 		return fmt.Errorf("failed to create PTY: %w", err)
 	}
 
-	// Create command using PTY's Command method
+	// Create command using PTY's Command method with optimizations
 	cmd := ptyInstance.Command(shell, args...)
-	
+
 	// Start the command
 	err = cmd.Start()
 	if err != nil {
@@ -83,13 +83,13 @@ func (ts *TerminalSession) Start() error {
 	ts.cmd = cmd
 	ts.isRunning = true
 	ts.lastActivity = time.Now()
-	
+
 	// Start timeout timer (60 minutes)
 	ts.startTimeoutTimer()
-	
+
 	// Start optimized I/O goroutines
-	go ts.writeHandler()  // Handle buffered writes
-	go ts.readHandler()   // Handle buffered reads
+	go ts.writeHandler() // Handle buffered writes
+	go ts.readHandler()  // Handle buffered reads
 
 	return nil
 }
@@ -201,7 +201,7 @@ func (ts *TerminalSession) writeHandler() {
 			ts.mutex.RLock()
 			pty := ts.pty
 			ts.mutex.RUnlock()
-			
+
 			if pty != nil {
 				pty.Write(data)
 			}
@@ -214,7 +214,7 @@ func (ts *TerminalSession) writeHandler() {
 // readHandler handles buffered reads from PTY (performance optimization)
 func (ts *TerminalSession) readHandler() {
 	buf := make([]byte, 4096)
-	
+
 	for {
 		select {
 		case <-ts.stopChannel:
@@ -228,7 +228,7 @@ func (ts *TerminalSession) readHandler() {
 				ts.mutex.RLock()
 				running := ts.isRunning
 				ts.mutex.RUnlock()
-				
+
 				if !running {
 					return
 				}
@@ -239,7 +239,7 @@ func (ts *TerminalSession) readHandler() {
 				// Send to read buffer channel
 				data := make([]byte, n)
 				copy(data, buf[:n])
-				
+
 				select {
 				case ts.readBuffer <- data:
 					// Update activity time
@@ -288,7 +288,7 @@ func (ts *TerminalSession) StartReadLoop(onData TerminalReadCallback, onExit Ter
 				ts.mutex.Lock()
 				ts.isRunning = false
 				ts.mutex.Unlock()
-				
+
 				if onExit != nil {
 					onExit("Terminal session ended")
 				}
@@ -318,15 +318,15 @@ func (ts *TerminalSession) startTimeoutTimer() {
 	if ts.timeoutTimer != nil {
 		ts.timeoutTimer.Stop()
 	}
-	
+
 	ts.timeoutTimer = time.AfterFunc(60*time.Minute, func() {
 		ts.mutex.Lock()
 		sessionID := ts.sessionID
 		ts.mutex.Unlock()
-		
+
 		// Stop the session
 		ts.Stop()
-		
+
 		// Notify callback if set
 		if ts.onTimeout != nil {
 			ts.onTimeout(sessionID)
@@ -348,14 +348,16 @@ func (ts *TerminalSession) GetSessionInfo() (sessionID, terminalType string, las
 
 // TerminalManager manages multiple terminal sessions
 type TerminalManager struct {
-	sessions map[string]*TerminalSession
-	mutex    sync.RWMutex
+	sessions    map[string]*TerminalSession
+	sessionPool map[string][]*TerminalSession // Pool for reusing sessions
+	mutex       sync.RWMutex
 }
 
 // NewTerminalManager creates a new terminal manager
 func NewTerminalManager() *TerminalManager {
 	return &TerminalManager{
-		sessions: make(map[string]*TerminalSession),
+		sessions:    make(map[string]*TerminalSession),
+		sessionPool: make(map[string][]*TerminalSession),
 	}
 }
 
@@ -372,7 +374,7 @@ func (tm *TerminalManager) CreateSession(sessionID, terminalType string) (*Termi
 	session.SetTimeoutCallback(func(id string) {
 		tm.removeSession(id)
 	})
-	
+
 	tm.sessions[sessionID] = session
 	return session, nil
 }

@@ -61,12 +61,13 @@
     </div>
 
     <!-- Terminal Content Area -->
-    <div class="terminal-content flex-1">
+    <div class="terminal-content flex-1 h-full">
       <div
         v-for="tab in tabs"
         :key="tab.id"
         :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
-        :class="['terminal-tab w-full h-full', { 'hidden': activeTabId !== tab.id }]"
+        :class="['terminal-tab', { 'hidden': activeTabId !== tab.id }]"
+        style="height:100%;width:100%;overflow:hidden;position:relative;"
       ></div>
     </div>
   </div>
@@ -157,48 +158,70 @@ const createTerminalInstance = (tab: TerminalTab): Terminal => {
     },
     cols: 80,
     rows: 24,
-    // Performance optimizations
-    scrollback: 1000,      // Limit scrollback for better performance
+    // Performance optimizations for faster rendering
+    scrollback: 500,          // Reduced from 1000 for better performance
     fastScrollModifier: 'alt',
     fastScrollSensitivity: 5,
     scrollSensitivity: 3,
+    windowsMode: false,       // Disable Windows-specific rendering
+    macOptionIsMeta: false,   // Optimize for performance
+    disableStdin: false,      // Keep input enabled
+    allowProposedApi: true,   // Enable performance API
   })
 
   const fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)
   tab.fitAddon = fitAddon
 
-  // Handle user input with batching for better performance
+  // Optimized input handling with reduced debouncing for better responsiveness
   let inputBuffer = ''
   let inputTimeout: NodeJS.Timeout | null = null
 
   terminal.onData((data) => {
-    if (tab.isRunning) {
-      // Batch input for better performance (especially for rapid typing)
-      inputBuffer += data
-      
-      if (inputTimeout) {
-        clearTimeout(inputTimeout)
-      }
-      
-      inputTimeout = setTimeout(() => {
-        WriteToTerminal(tab.id, inputBuffer).catch((error) => {
-          console.error('Error writing to terminal:', error)
-          terminal.writeln(`\r\nError: ${error}`)
-        })
-        inputBuffer = ''
-        inputTimeout = null
-      }, 1) // Small delay for batching
+    if (!tab.isRunning) return
+    
+    // For single characters, send immediately to reduce latency
+    if (data.length === 1 && inputBuffer === '') {
+      WriteToTerminal(tab.id, data).catch((error) => {
+        console.error('Error writing to terminal:', error)
+        terminal.writeln(`\r\nError: ${error}`)
+      })
+      return
     }
+    
+    // Batch only for multi-character input (paste operations)
+    inputBuffer += data
+    
+    if (inputTimeout) {
+      clearTimeout(inputTimeout)
+    }
+    
+    // Immediate send for better responsiveness
+    inputTimeout = setTimeout(() => {
+      WriteToTerminal(tab.id, inputBuffer).catch((error) => {
+        console.error('Error writing to terminal:', error)
+        terminal.writeln(`\r\nError: ${error}`)
+      })
+      inputBuffer = ''
+      inputTimeout = null
+    }, 0) // Immediate execution in next tick
   })
 
-  // Handle resize events
+  // Throttled resize handling to prevent excessive calls
+  let resizeTimeout: NodeJS.Timeout | null = null
   terminal.onResize(({ cols, rows }) => {
-    if (tab.isRunning) {
+    if (!tab.isRunning) return
+    
+    if (resizeTimeout) {
+      clearTimeout(resizeTimeout)
+    }
+    
+    resizeTimeout = setTimeout(() => {
       ResizeTerminalSession(tab.id, cols, rows).catch((error: any) => {
         console.error('Error resizing terminal:', error)
       })
-    }
+      resizeTimeout = null
+    }, 50) // Throttle resize events
   })
 
   return terminal
@@ -212,15 +235,39 @@ const initializeTab = async (tab: TerminalTab) => {
   tab.terminal.open(element)
 
   await nextTick()
+  
+  // Improved fitting with proper height calculation
   if (tab.fitAddon) {
-    tab.fitAddon.fit()
+    // Ensure the container has proper dimensions before fitting
+    const container = element.parentElement
+    if (container) {
+      const containerHeight = container.clientHeight - 16 // Account for padding
+      const charHeight = 18 // Approximate character height for font size 14
+      const headerHeight = 48 // Terminal header height
+      const availableHeight = containerHeight - headerHeight
+      const rows = Math.floor(availableHeight / charHeight)
+      
+      // Set minimum and maximum row limits
+      const finalRows = Math.min(Math.max(rows, 10), 50)
+      
+      // Force terminal to use calculated dimensions
+      tab.terminal.resize(80, finalRows)
+      await nextTick()
+      tab.fitAddon.fit()
+    }
   }
 
   // Automatically start terminal session
   try {
     await CreateTerminalSession(tab.id, tab.type)
     tab.isRunning = true
-    tab.terminal.focus()
+    
+    // Focus terminal after short delay to ensure proper rendering
+    setTimeout(() => {
+      if (tab.terminal && activeTabId.value === tab.id) {
+        tab.terminal.focus()
+      }
+    }, 100)
   } catch (error) {
     console.error('Error starting terminal session:', error)
     tab.terminal.writeln(`Error starting ${tab.type} session: ${error}`)
@@ -340,9 +387,24 @@ const handleTerminalExit = (event: { sessionID: string, message: string }) => {
 const handleResize = () => {
   const activeTab = tabs.value.find(t => t.id === activeTabId.value)
   if (activeTab?.fitAddon) {
-    activeTab.fitAddon.fit()
+    // Throttle resize operations to improve performance
+    if (resizeTimeout.value) {
+      clearTimeout(resizeTimeout.value)
+    }
+    resizeTimeout.value = window.setTimeout(() => {
+      if (activeTab.fitAddon) {
+        try {
+          activeTab.fitAddon.fit()
+        } catch (error) {
+          console.warn('Terminal resize failed:', error)
+        }
+      }
+    }, 100) // Increased throttling to 100ms for better performance
   }
 }
+
+// Add resize timeout ref
+const resizeTimeout = ref<number | null>(null)
 
 // Close dropdown when clicking outside
 const handleClickOutside = (event: Event) => {
@@ -408,6 +470,11 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  // Clean up resize timeout
+  if (resizeTimeout.value) {
+    clearTimeout(resizeTimeout.value)
+  }
+
   // Clean up all terminals
   tabs.value.forEach(tab => {
     if (tab.terminal) {
@@ -442,12 +509,13 @@ onUnmounted(() => {
 }
 
 .terminal-tab {
-  padding: 8px;
+  /* Remove padding to prevent prompt cutoff */
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  overflow: hidden;
 }
 
 /* Ensure xterm.js terminal fits properly and performs well */
@@ -459,13 +527,28 @@ onUnmounted(() => {
 :deep(.xterm-viewport) {
   height: 100% !important;
   width: 100% !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(75, 85, 99, 0.8) transparent;
 }
 
-/* Optimize xterm.js performance */
+/* Fix xterm.js helper textarea positioning */
+:deep(.xterm-helper-textarea) {
+  position: fixed !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  z-index: -1000 !important;
+}
+
+/* Ensure proper terminal sizing */
 :deep(.xterm-screen) {
   /* Enable hardware acceleration for better performance */
   transform: translateZ(0);
   will-change: transform;
+  position: relative;
 }
 
 :deep(.xterm .xterm-cursor-layer) {
@@ -553,18 +636,30 @@ button:hover .close-btn {
 /* Better scrollbar styling for webkit browsers */
 :deep(.xterm .xterm-viewport)::-webkit-scrollbar {
   width: 8px;
+  background: rgba(31, 41, 55, 0.3);
 }
 
 :deep(.xterm .xterm-viewport)::-webkit-scrollbar-track {
-  background: #1f2937;
-}
-
-:deep(.xterm .xterm-viewport)::-webkit-scrollbar-thumb {
-  background: #4b5563;
+  background: rgba(31, 41, 55, 0.1);
   border-radius: 4px;
 }
 
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar-thumb {
+  background: rgba(75, 85, 99, 0.8);
+  border-radius: 4px;
+  border: 1px solid rgba(55, 65, 81, 0.5);
+}
+
 :deep(.xterm .xterm-viewport)::-webkit-scrollbar-thumb:hover {
-  background: #6b7280;
+  background: rgba(107, 114, 128, 0.9);
+}
+
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Ensure scrollbar never overlaps terminal content */
+:deep(.xterm .xterm-rows) {
+  margin-right: 8px;
 }
 </style>

@@ -55,7 +55,7 @@ func (a *App) CreateTerminalSession(sessionID, terminalType string) error {
 				"data":      data,
 			})
 		},
-		// onExit callback - emit terminal exit to frontend  
+		// onExit callback - emit terminal exit to frontend
 		func(message string) {
 			runtime.EventsEmit(a.ctx, "terminal:exit", map[string]interface{}{
 				"sessionID": sessionID,
