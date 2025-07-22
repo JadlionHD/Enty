@@ -103,6 +103,37 @@ const showAddTabMenu = ref(false)
 const availableTerminalTypes = ref<string[]>([])
 const terminalRefs = reactive<Map<string, HTMLElement>>(new Map())
 
+// Persistence key for localStorage
+const TERMINAL_STATE_KEY = 'enty-terminal-state'
+
+// Save terminal state to localStorage
+const saveTerminalState = () => {
+  const state = {
+    tabs: tabs.value.map(tab => ({
+      id: tab.id,
+      name: tab.name,
+      type: tab.type,
+      // Note: Don't save terminal instances or running state
+    })),
+    activeTabId: activeTabId.value,
+  }
+  localStorage.setItem(TERMINAL_STATE_KEY, JSON.stringify(state))
+}
+
+// Load terminal state from localStorage
+const loadTerminalState = () => {
+  const saved = localStorage.getItem(TERMINAL_STATE_KEY)
+  if (saved) {
+    try {
+      const state = JSON.parse(saved)
+      return state
+    } catch (error) {
+      console.warn('Failed to parse saved terminal state:', error)
+    }
+  }
+  return null
+}
+
 // Generate unique session ID
 const generateSessionId = () => `terminal-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
 
@@ -126,19 +157,38 @@ const createTerminalInstance = (tab: TerminalTab): Terminal => {
     },
     cols: 80,
     rows: 24,
+    // Performance optimizations
+    scrollback: 1000,      // Limit scrollback for better performance
+    fastScrollModifier: 'alt',
+    fastScrollSensitivity: 5,
+    scrollSensitivity: 3,
   })
 
   const fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)
   tab.fitAddon = fitAddon
 
-  // Handle user input
+  // Handle user input with batching for better performance
+  let inputBuffer = ''
+  let inputTimeout: NodeJS.Timeout | null = null
+
   terminal.onData((data) => {
     if (tab.isRunning) {
-      WriteToTerminal(tab.id, data).catch((error) => {
-        console.error('Error writing to terminal:', error)
-        terminal.writeln(`\r\nError: ${error}`)
-      })
+      // Batch input for better performance (especially for rapid typing)
+      inputBuffer += data
+      
+      if (inputTimeout) {
+        clearTimeout(inputTimeout)
+      }
+      
+      inputTimeout = setTimeout(() => {
+        WriteToTerminal(tab.id, inputBuffer).catch((error) => {
+          console.error('Error writing to terminal:', error)
+          terminal.writeln(`\r\nError: ${error}`)
+        })
+        inputBuffer = ''
+        inputTimeout = null
+      }, 1) // Small delay for batching
     }
   })
 
@@ -191,6 +241,9 @@ const addTab = async (terminalType: string) => {
   tabs.value.push(tab)
   activeTabId.value = tab.id
   showAddTabMenu.value = false
+  
+  // Save state to localStorage
+  saveTerminalState()
 
   // Wait for DOM update then initialize
   await nextTick()
@@ -201,6 +254,7 @@ const switchToTab = async (tabId: string) => {
   if (activeTabId.value === tabId) return
 
   activeTabId.value = tabId
+  saveTerminalState() // Save active tab change
   await nextTick()
 
   const tab = tabs.value.find(t => t.id === tabId)
@@ -238,6 +292,9 @@ const closeTab = async (tabId: string) => {
   // Remove tab
   tabs.value.splice(tabIndex, 1)
   terminalRefs.delete(tabId)
+  
+  // Save state after tab removal
+  saveTerminalState()
 
   // Switch to another tab if this was active
   if (activeTabId.value === tabId) {
@@ -264,6 +321,7 @@ const clearActiveTerminal = () => {
 const handleTerminalData = (event: { sessionID: string, data: string }) => {
   const tab = tabs.value.find(t => t.id === event.sessionID)
   if (tab?.terminal) {
+    // Optimized terminal output writing
     tab.terminal.write(event.data)
   }
 }
@@ -303,9 +361,41 @@ onMounted(async () => {
     availableTerminalTypes.value = ['bash'] // fallback
   }
 
-  // Create initial tab
-  if (availableTerminalTypes.value.length > 0) {
-    await addTab(availableTerminalTypes.value[0])
+  // Load saved terminal state
+  const savedState = loadTerminalState()
+  
+  if (savedState && savedState.tabs && savedState.tabs.length > 0) {
+    // Restore saved tabs
+    for (const savedTab of savedState.tabs) {
+      const tab: TerminalTab = {
+        id: savedTab.id,
+        name: savedTab.name,
+        type: savedTab.type,
+        terminal: null,
+        fitAddon: null,
+        isRunning: false
+      }
+      tabs.value.push(tab)
+    }
+    
+    // Set active tab
+    if (savedState.activeTabId && tabs.value.find(t => t.id === savedState.activeTabId)) {
+      activeTabId.value = savedState.activeTabId
+    } else {
+      activeTabId.value = tabs.value[0].id
+    }
+    
+    // Initialize active tab
+    await nextTick()
+    const activeTab = tabs.value.find(t => t.id === activeTabId.value)
+    if (activeTab) {
+      await initializeTab(activeTab)
+    }
+  } else {
+    // Create initial tab if no saved state
+    if (availableTerminalTypes.value.length > 0) {
+      await addTab(availableTerminalTypes.value[0])
+    }
   }
 
   // Listen for terminal events from backend
@@ -340,13 +430,15 @@ onUnmounted(() => {
 .terminal-container {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: 80vh; /* 80% of viewport height as requested */
   min-height: 400px;
+  max-height: calc(100vh - 100px); /* Leave some space for other UI elements */
 }
 
 .terminal-content {
   flex: 1;
   position: relative;
+  overflow: hidden; /* Prevent scrollbars outside terminals */
 }
 
 .terminal-tab {
@@ -358,18 +450,34 @@ onUnmounted(() => {
   height: 100%;
 }
 
-/* Ensure xterm.js terminal fits properly */
+/* Ensure xterm.js terminal fits properly and performs well */
 :deep(.xterm) {
   height: 100% !important;
+  width: 100% !important;
 }
 
 :deep(.xterm-viewport) {
   height: 100% !important;
+  width: 100% !important;
 }
 
-/* Add tab styling */
+/* Optimize xterm.js performance */
+:deep(.xterm-screen) {
+  /* Enable hardware acceleration for better performance */
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+:deep(.xterm .xterm-cursor-layer) {
+  /* Smoother cursor animations */
+  transition: opacity 0.1s ease;
+}
+
+/* Add tab styling with better UX */
 .terminal-header {
   border-bottom: 1px solid #374151;
+  background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+  min-height: 48px; /* Ensure adequate tab height */
 }
 
 /* Dropdown menu styling */
@@ -377,8 +485,86 @@ onUnmounted(() => {
   position: relative;
 }
 
-/* Close button styling */
+/* Enhanced button styling for better UX */
 button {
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Tab close button styling */
+button:hover .close-btn {
+  background-color: #ef4444;
+  color: white;
+}
+
+/* Responsive design adjustments */
+@media (max-height: 600px) {
+  .terminal-container {
+    height: 75vh; /* Slightly less on smaller screens */
+    min-height: 300px;
+  }
+}
+
+@media (max-height: 400px) {
+  .terminal-container {
+    height: 70vh;
+    min-height: 250px;
+  }
+  
+  .terminal-header {
+    min-height: 40px;
+  }
+}
+
+/* Performance optimizations for smooth rendering */
+.terminal-container * {
+  box-sizing: border-box;
+}
+
+/* Smooth tab transitions */
+.terminal-tab {
+  transition: opacity 0.1s ease;
+}
+
+.terminal-tab.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Loading state for terminals */
+.terminal-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 14px;
+}
+
+/* Better scrollbar styling for webkit browsers */
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar {
+  width: 8px;
+}
+
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar-track {
+  background: #1f2937;
+}
+
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar-thumb {
+  background: #4b5563;
+  border-radius: 4px;
+}
+
+:deep(.xterm .xterm-viewport)::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
 }
 </style>

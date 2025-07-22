@@ -14,13 +14,16 @@ import (
 type TerminalSession struct {
 	pty           pty.Pty
 	cmd           *pty.Cmd
-	mutex         sync.Mutex
+	mutex         sync.RWMutex  // Changed to RWMutex for better performance
 	isRunning     bool
 	sessionID     string
 	terminalType  string
 	lastActivity  time.Time
 	timeoutTimer  *time.Timer
 	onTimeout     func(sessionID string)
+	readBuffer    chan []byte    // Buffered channel for efficient data streaming
+	writeBuffer   chan []byte    // Buffered channel for write operations  
+	stopChannel   chan struct{}  // Channel for graceful shutdown
 }
 
 // NewTerminalSession creates a new terminal session
@@ -37,6 +40,9 @@ func NewTerminalSessionWithID(sessionID, terminalType string) *TerminalSession {
 		sessionID:    sessionID,
 		terminalType: terminalType,
 		lastActivity: time.Now(),
+		readBuffer:   make(chan []byte, 100),  // Buffered channel for performance
+		writeBuffer:  make(chan []byte, 50),   // Buffered channel for writes
+		stopChannel:  make(chan struct{}, 1),  // Channel for clean shutdown
 	}
 }
 
@@ -80,25 +86,39 @@ func (ts *TerminalSession) Start() error {
 	
 	// Start timeout timer (60 minutes)
 	ts.startTimeoutTimer()
+	
+	// Start optimized I/O goroutines
+	go ts.writeHandler()  // Handle buffered writes
+	go ts.readHandler()   // Handle buffered reads
 
 	return nil
 }
 
-// Write sends input to the terminal
+// Write sends input to the terminal (optimized with buffering)
 func (ts *TerminalSession) Write(input string) error {
-	ts.mutex.Lock()
-	defer ts.mutex.Unlock()
-
+	ts.mutex.RLock()
 	if !ts.isRunning || ts.pty == nil {
+		ts.mutex.RUnlock()
 		return fmt.Errorf("terminal is not running")
 	}
+	ts.mutex.RUnlock()
 
 	// Update last activity time
+	ts.mutex.Lock()
 	ts.lastActivity = time.Now()
 	ts.resetTimeoutTimer()
+	ts.mutex.Unlock()
 
-	_, err := ts.pty.Write([]byte(input))
-	return err
+	// Use buffered write for better performance
+	data := []byte(input)
+	select {
+	case ts.writeBuffer <- data:
+		return nil
+	default:
+		// If buffer is full, write directly (fallback)
+		_, err := ts.pty.Write(data)
+		return err
+	}
 }
 
 // Stop closes the PTY terminal session
@@ -109,6 +129,9 @@ func (ts *TerminalSession) Stop() error {
 	if !ts.isRunning {
 		return nil
 	}
+
+	// Signal shutdown to goroutines
+	close(ts.stopChannel)
 
 	// Stop timeout timer
 	if ts.timeoutTimer != nil {
@@ -128,40 +151,108 @@ func (ts *TerminalSession) Stop() error {
 	ts.pty = nil
 	ts.cmd = nil
 
+	// Close channels
+	close(ts.readBuffer)
+	close(ts.writeBuffer)
+
 	return nil
 }
 
-// IsRunning returns the terminal status
+// IsRunning returns the terminal status (optimized with RLock)
 func (ts *TerminalSession) IsRunning() bool {
-	ts.mutex.Lock()
-	defer ts.mutex.Unlock()
+	ts.mutex.RLock()
+	defer ts.mutex.RUnlock()
 	return ts.isRunning
 }
 
-// Resize resizes the PTY terminal
+// Resize resizes the PTY terminal (optimized with RLock)
 func (ts *TerminalSession) Resize(cols, rows int) error {
-	ts.mutex.Lock()
-	defer ts.mutex.Unlock()
+	ts.mutex.RLock()
+	pty := ts.pty
+	isRunning := ts.isRunning
+	ts.mutex.RUnlock()
 
-	if !ts.isRunning || ts.pty == nil {
+	if !isRunning || pty == nil {
 		return fmt.Errorf("terminal is not running")
 	}
 
-	return ts.pty.Resize(cols, rows)
+	return pty.Resize(cols, rows)
 }
 
 // Read reads data from the terminal (blocking)
 func (ts *TerminalSession) Read(buf []byte) (int, error) {
-	ts.mutex.Lock()
+	ts.mutex.RLock()
 	pty := ts.pty
 	isRunning := ts.isRunning
-	ts.mutex.Unlock()
+	ts.mutex.RUnlock()
 
 	if !isRunning || pty == nil {
 		return 0, fmt.Errorf("terminal is not running")
 	}
 
 	return pty.Read(buf)
+}
+
+// writeHandler handles buffered writes to PTY (performance optimization)
+func (ts *TerminalSession) writeHandler() {
+	for {
+		select {
+		case data := <-ts.writeBuffer:
+			ts.mutex.RLock()
+			pty := ts.pty
+			ts.mutex.RUnlock()
+			
+			if pty != nil {
+				pty.Write(data)
+			}
+		case <-ts.stopChannel:
+			return
+		}
+	}
+}
+
+// readHandler handles buffered reads from PTY (performance optimization)
+func (ts *TerminalSession) readHandler() {
+	buf := make([]byte, 4096)
+	
+	for {
+		select {
+		case <-ts.stopChannel:
+			return
+		default:
+			n, err := ts.Read(buf)
+			if err != nil {
+				if err == io.EOF {
+					return
+				}
+				ts.mutex.RLock()
+				running := ts.isRunning
+				ts.mutex.RUnlock()
+				
+				if !running {
+					return
+				}
+				continue
+			}
+
+			if n > 0 {
+				// Send to read buffer channel
+				data := make([]byte, n)
+				copy(data, buf[:n])
+				
+				select {
+				case ts.readBuffer <- data:
+					// Update activity time
+					ts.mutex.Lock()
+					ts.lastActivity = time.Now()
+					ts.resetTimeoutTimer()
+					ts.mutex.Unlock()
+				case <-ts.stopChannel:
+					return
+				}
+			}
+		}
+	}
 }
 
 // GetPlatformShell returns the appropriate shell command and arguments for the current platform
@@ -186,44 +277,23 @@ type TerminalExitCallback func(message string)
 // StartReadLoop starts a goroutine to continuously read from the terminal and call the provided callback
 func (ts *TerminalSession) StartReadLoop(onData TerminalReadCallback, onExit TerminalExitCallback) {
 	go func() {
-		buf := make([]byte, 4096)
-		
 		for {
-			n, err := ts.Read(buf)
-			if err != nil {
-				if err == io.EOF {
-					break
+			select {
+			case data := <-ts.readBuffer:
+				if onData != nil && len(data) > 0 {
+					onData(string(data))
 				}
-				// Continue reading even on error, unless terminal is stopped
+			case <-ts.stopChannel:
+				// Terminal process ended, clean up
 				ts.mutex.Lock()
-				running := ts.isRunning
+				ts.isRunning = false
 				ts.mutex.Unlock()
 				
-				if !running {
-					break
+				if onExit != nil {
+					onExit("Terminal session ended")
 				}
-				continue
+				return
 			}
-
-			if n > 0 && onData != nil {
-				data := string(buf[:n])
-				onData(data)
-				
-				// Update activity time
-				ts.mutex.Lock()
-				ts.lastActivity = time.Now()
-				ts.resetTimeoutTimer()
-				ts.mutex.Unlock()
-			}
-		}
-
-		// Terminal process ended, clean up
-		ts.mutex.Lock()
-		ts.isRunning = false
-		ts.mutex.Unlock()
-		
-		if onExit != nil {
-			onExit("Terminal session ended")
 		}
 	}()
 }
@@ -269,10 +339,10 @@ func (ts *TerminalSession) resetTimeoutTimer() {
 	ts.startTimeoutTimer()
 }
 
-// GetSessionInfo returns session information
+// GetSessionInfo returns session information (optimized with RLock)
 func (ts *TerminalSession) GetSessionInfo() (sessionID, terminalType string, lastActivity time.Time) {
-	ts.mutex.Lock()
-	defer ts.mutex.Unlock()
+	ts.mutex.RLock()
+	defer ts.mutex.RUnlock()
 	return ts.sessionID, ts.terminalType, ts.lastActivity
 }
 
