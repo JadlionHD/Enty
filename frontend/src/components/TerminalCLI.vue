@@ -83,9 +83,7 @@ import {
   WriteToTerminal, 
   CloseTerminalSession, 
   ResizeTerminalSession, 
-  IsTerminalSessionRunning,
   GetAvailableTerminalTypes,
-  ListTerminalSessions
 } from '../../wailsjs/go/main/App'
 import { EventsOn, EventsOff } from '../../wailsjs/runtime/runtime'
 
@@ -96,6 +94,8 @@ interface TerminalTab {
   terminal: Terminal | null
   fitAddon: FitAddon | null
   isRunning: boolean
+  isPaused: boolean // New: Track if terminal is paused to save resources
+  lastActiveTime: number // New: Track last activity for resource optimization
 }
 
 const tabs = ref<TerminalTab[]>([])
@@ -103,6 +103,8 @@ const activeTabId = ref<string>('')
 const showAddTabMenu = ref(false)
 const availableTerminalTypes = ref<string[]>([])
 const terminalRefs = reactive<Map<string, HTMLElement>>(new Map())
+const isComponentVisible = ref(true) // New: Track component visibility for resource optimization
+const resourceOptimizationTimer = ref<number | null>(null) // New: Timer for pausing inactive terminals
 
 // Persistence key for localStorage
 const TERMINAL_STATE_KEY = 'enty-terminal-state'
@@ -147,19 +149,18 @@ const setTerminalRef = (tabId: string, el: HTMLElement | null) => {
 }
 
 const createTerminalInstance = (tab: TerminalTab): Terminal => {
-  const terminal = new Terminal({
+const terminal = new Terminal({
     cursorBlink: true,
     fontSize: 14,
     fontFamily: 'Consolas, "Courier New", monospace',
     theme: {
-      background: '#000000',
-      foreground: '#ffffff',
-      cursor: '#ffffff',
+        background: '#000000',
+        foreground: '#ffffff',
+        cursor: '#ffffff',
     },
-    cols: 80,
+    cols: 200, // Increased columns for full width
     rows: 24,
-    // Performance optimizations for faster rendering
-    scrollback: 500,          // Reduced from 1000 for better performance
+    scrollback: 500,
     fastScrollModifier: 'alt',
     fastScrollSensitivity: 5,
     scrollSensitivity: 3,
@@ -167,7 +168,7 @@ const createTerminalInstance = (tab: TerminalTab): Terminal => {
     macOptionIsMeta: false,   // Optimize for performance
     disableStdin: false,      // Keep input enabled
     allowProposedApi: true,   // Enable performance API
-  })
+})
 
   const fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)
@@ -282,7 +283,9 @@ const addTab = async (terminalType: string) => {
     type: terminalType,
     terminal: null,
     fitAddon: null,
-    isRunning: false
+    isRunning: false,
+    isPaused: false,
+    lastActiveTime: Date.now()
   }
 
   tabs.value.push(tab)
@@ -300,6 +303,12 @@ const addTab = async (terminalType: string) => {
 const switchToTab = async (tabId: string) => {
   if (activeTabId.value === tabId) return
 
+  // Update last active time for previous tab
+  const prevTab = tabs.value.find(t => t.id === activeTabId.value)
+  if (prevTab) {
+    prevTab.lastActiveTime = Date.now()
+  }
+
   activeTabId.value = tabId
   saveTerminalState() // Save active tab change
   await nextTick()
@@ -307,14 +316,28 @@ const switchToTab = async (tabId: string) => {
   const tab = tabs.value.find(t => t.id === tabId)
   if (!tab) return
 
-  if (!tab.terminal) {
-    await initializeTab(tab)
-  } else {
-    // Re-fit terminal when switching tabs
-    if (tab.fitAddon) {
-      tab.fitAddon.fit()
+  // Update current tab's active time
+  tab.lastActiveTime = Date.now()
+
+  if (!tab.terminal || tab.isPaused) {
+    // Resume paused terminal or initialize new one
+    if (tab.isPaused) {
+      await resumeTerminal(tab)
+    } else {
+      await initializeTab(tab)
     }
-    tab.terminal.focus()
+  } else {
+    // Re-fit terminal when switching tabs (throttled)
+    if (tab.fitAddon) {
+      requestAnimationFrame(() => {
+        if (tab.fitAddon) {
+          tab.fitAddon.fit()
+        }
+        if (tab.terminal) {
+          tab.terminal.focus()
+        }
+      })
+    }
   }
 }
 
@@ -365,11 +388,67 @@ const clearActiveTerminal = () => {
   }
 }
 
+// Resource optimization functions
+const pauseInactiveTerminals = () => {
+  const now = Date.now()
+  const INACTIVE_THRESHOLD = 5 * 60 * 1000 // 5 minutes of inactivity
+  
+  tabs.value.forEach(tab => {
+    if (tab.id !== activeTabId.value && !tab.isPaused && tab.terminal) {
+      if (now - tab.lastActiveTime > INACTIVE_THRESHOLD) {
+        // Pause terminal to save resources
+        tab.isPaused = true
+        // Dispose of the terminal instance but keep the session
+        if (tab.terminal) {
+          tab.terminal.dispose()
+          tab.terminal = null
+        }
+        console.log(`Paused inactive terminal: ${tab.name}`)
+      }
+    }
+  })
+}
+
+const resumeTerminal = async (tab: TerminalTab) => {
+  if (tab.isPaused && !tab.terminal) {
+    tab.isPaused = false
+    tab.lastActiveTime = Date.now()
+    // Recreate terminal instance
+    await initializeTab(tab)
+    console.log(`Resumed terminal: ${tab.name}`)
+  }
+}
+
+// Optimized visibility handlers for when component is not visible
+const handleVisibilityChange = () => {
+  isComponentVisible.value = !document.hidden
+  
+  if (!isComponentVisible.value) {
+    // Component not visible, start resource optimization timer
+    resourceOptimizationTimer.value = window.setTimeout(() => {
+      pauseInactiveTerminals()
+    }, 30000) // Pause after 30 seconds of invisibility
+  } else {
+    // Component visible, cancel optimization timer
+    if (resourceOptimizationTimer.value) {
+      clearTimeout(resourceOptimizationTimer.value)
+      resourceOptimizationTimer.value = null
+    }
+  }
+}
+
 const handleTerminalData = (event: { sessionID: string, data: string }) => {
   const tab = tabs.value.find(t => t.id === event.sessionID)
-  if (tab?.terminal) {
-    // Optimized terminal output writing
-    tab.terminal.write(event.data)
+  if (tab?.terminal && !tab.isPaused) {
+    // Only process data for active, non-paused terminals
+    tab.lastActiveTime = Date.now()
+    
+    // Use requestAnimationFrame for smoother rendering
+    requestAnimationFrame(() => {
+      if (tab.terminal && !tab.isPaused) {
+        tab.terminal.write(event.data)
+      }
+    })
   }
 }
 
@@ -377,9 +456,15 @@ const handleTerminalExit = (event: { sessionID: string, message: string }) => {
   const tab = tabs.value.find(t => t.id === event.sessionID)
   if (tab) {
     tab.isRunning = false
-    if (tab.terminal) {
-      tab.terminal.writeln(`\r\n${event.message}`)
-      tab.terminal.writeln('Terminal session ended due to timeout or process exit.')
+    tab.lastActiveTime = Date.now()
+    
+    if (tab.terminal && !tab.isPaused) {
+      requestAnimationFrame(() => {
+        if (tab.terminal) {
+          tab.terminal.writeln(`\r\n${event.message}`)
+          tab.terminal.writeln('Terminal session ended due to timeout or process exit.')
+        }
+      })
     }
   }
 }
@@ -435,7 +520,9 @@ onMounted(async () => {
         type: savedTab.type,
         terminal: null,
         fitAddon: null,
-        isRunning: false
+        isRunning: false,
+        isPaused: false,
+        lastActiveTime: Date.now()
       }
       tabs.value.push(tab)
     }
@@ -464,9 +551,20 @@ onMounted(async () => {
   EventsOn('terminal:data', handleTerminalData)
   EventsOn('terminal:exit', handleTerminalExit)
 
-  // Handle window resize
+  // Handle window resize and visibility changes
   window.addEventListener('resize', handleResize)
   document.addEventListener('click', handleClickOutside)
+  document.addEventListener('visibilitychange', handleVisibilityChange)
+  
+  // Start periodic resource optimization (every 2 minutes)
+  const resourceOptInterval = setInterval(() => {
+    if (isComponentVisible.value) {
+      pauseInactiveTerminals()
+    }
+  }, 2 * 60 * 1000)
+  
+  // Store interval ID for cleanup
+  ;(window as any).__terminalResourceInterval = resourceOptInterval
 })
 
 onUnmounted(() => {
@@ -475,7 +573,18 @@ onUnmounted(() => {
     clearTimeout(resizeTimeout.value)
   }
 
-  // Clean up all terminals
+  // Clean up resource optimization timer
+  if (resourceOptimizationTimer.value) {
+    clearTimeout(resourceOptimizationTimer.value)
+  }
+
+  // Clean up resource optimization interval
+  if ((window as any).__terminalResourceInterval) {
+    clearInterval((window as any).__terminalResourceInterval)
+    delete (window as any).__terminalResourceInterval
+  }
+
+  // Clean up all terminals and dispose properly
   tabs.value.forEach(tab => {
     if (tab.terminal) {
       tab.terminal.dispose()
@@ -490,6 +599,7 @@ onUnmounted(() => {
   EventsOff('terminal:exit')
   window.removeEventListener('resize', handleResize)
   document.removeEventListener('click', handleClickOutside)
+  document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
 
