@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import MainSidebar from '@/components/MainSidebar.vue';
 import MainLayout from '@/layouts/MainLayout.vue';
+import TerminalCLI from '@/components/TerminalCLI.vue';
 
 import { onMounted, ref } from 'vue';
 </script>
