@@ -4,46 +4,29 @@
       <div class="flex items-center gap-2">
         <!-- Tab Navigation -->
         <div class="flex gap-1">
-          <button
-            v-for="tab in tabs"
-            :key="tab.id"
-            @click="switchToTab(tab.id)"
-            :class="[
-              'px-3 py-1 text-xs rounded flex items-center gap-2',
-              activeTabId === tab.id 
-                ? 'bg-blue-600 text-white' 
-                : 'bg-gray-600 hover:bg-gray-500 text-gray-200'
-            ]"
-          >
+          <button v-for="tab in tabs" :key="tab.id" @click="switchToTab(tab.id)" :class="[
+            'px-3 py-1 text-xs rounded flex items-center gap-2',
+            activeTabId === tab.id
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-600 hover:bg-gray-500 text-gray-200'
+          ]">
             <span>{{ tab.name }}</span>
-            <button
-              @click.stop="closeTab(tab.id)"
-              class="hover:bg-red-500 rounded px-1"
-              v-if="tabs.length > 1"
-            >
+            <button @click.stop="closeTab(tab.id)" class="hover:bg-red-500 rounded px-1" v-if="tabs.length > 1">
               ×
             </button>
           </button>
         </div>
-        
+
         <!-- Add Tab Dropdown -->
         <div class="relative">
-          <button
-            @click="showAddTabMenu = !showAddTabMenu"
-            class="px-2 py-1 text-xs bg-green-600 hover:bg-green-700 rounded"
-          >
+          <button @click="showAddTabMenu = !showAddTabMenu"
+            class="px-2 py-1 text-xs bg-green-600 hover:bg-green-700 rounded">
             + Add Tab
           </button>
-          <div
-            v-if="showAddTabMenu"
-            class="absolute top-full left-0 mt-1 bg-gray-700 border border-gray-600 rounded shadow-lg z-10"
-          >
-            <button
-              v-for="terminalType in availableTerminalTypes"
-              :key="terminalType"
-              @click="addTab(terminalType)"
-              class="block w-full px-4 py-2 text-left text-xs hover:bg-gray-600 text-white"
-            >
+          <div v-if="showAddTabMenu"
+            class="absolute top-full left-0 mt-1 bg-gray-700 border border-gray-600 rounded shadow-lg z-10">
+            <button v-for="terminalType in availableTerminalTypes" :key="terminalType" @click="addTab(terminalType)"
+              class="block w-full px-4 py-2 text-left text-xs hover:bg-gray-600 text-white">
               {{ terminalType.charAt(0).toUpperCase() + terminalType.slice(1) }}
             </button>
           </div>
@@ -51,10 +34,7 @@
       </div>
 
       <div class="flex gap-2">
-        <button 
-          @click="clearActiveTerminal"
-          class="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded"
-        >
+        <button @click="clearActiveTerminal" class="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded">
           Clear
         </button>
       </div>
@@ -62,27 +42,24 @@
 
     <!-- Terminal Content Area -->
     <div class="terminal-content flex-1 h-full">
-      <div
-        v-for="tab in tabs"
-        :key="tab.id"
-        :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
+      <div v-for="tab in tabs" :key="tab.id" :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
         :class="['terminal-tab', { 'hidden': activeTabId !== tab.id }]"
-        style="height:100%;width:100%;overflow:hidden;position:relative;"
-      ></div>
+        style="height:100%;width:100%;overflow:hidden;position:relative;"></div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, nextTick, reactive } from 'vue'
+import { ref, onMounted, onUnmounted, nextTick, reactive, watch } from 'vue'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
-import { 
-  CreateTerminalSession, 
-  WriteToTerminal, 
-  CloseTerminalSession, 
-  ResizeTerminalSession, 
+import { useWindowSize, watchThrottled } from '@vueuse/core'
+import {
+  CreateTerminalSession,
+  WriteToTerminal,
+  CloseTerminalSession,
+  ResizeTerminalSession,
   GetAvailableTerminalTypes,
 } from '../../wailsjs/go/main/App'
 import { EventsOn, EventsOff } from '../../wailsjs/runtime/runtime'
@@ -105,6 +82,9 @@ const availableTerminalTypes = ref<string[]>([])
 const terminalRefs = reactive<Map<string, HTMLElement>>(new Map())
 const isComponentVisible = ref(true) // New: Track component visibility for resource optimization
 const resourceOptimizationTimer = ref<number | null>(null) // New: Timer for pausing inactive terminals
+
+// Use VueUse for window size tracking
+const { width, height } = useWindowSize()
 
 // Persistence key for localStorage
 const TERMINAL_STATE_KEY = 'enty-terminal-state'
@@ -149,14 +129,14 @@ const setTerminalRef = (tabId: string, el: HTMLElement | null) => {
 }
 
 const createTerminalInstance = (tab: TerminalTab): Terminal => {
-const terminal = new Terminal({
+  const terminal = new Terminal({
     cursorBlink: true,
     fontSize: 14,
     fontFamily: 'Consolas, "Courier New", monospace',
     theme: {
-        background: '#000000',
-        foreground: '#ffffff',
-        cursor: '#ffffff',
+      background: '#000000',
+      foreground: '#ffffff',
+      cursor: '#ffffff',
     },
     cols: 200, // Increased columns for full width
     rows: 24,
@@ -168,7 +148,7 @@ const terminal = new Terminal({
     macOptionIsMeta: false,   // Optimize for performance
     disableStdin: false,      // Keep input enabled
     allowProposedApi: true,   // Enable performance API
-})
+  })
 
   const fitAddon = new FitAddon()
   terminal.loadAddon(fitAddon)
@@ -180,7 +160,7 @@ const terminal = new Terminal({
 
   terminal.onData((data) => {
     if (!tab.isRunning) return
-    
+
     // For single characters, send immediately to reduce latency
     if (data.length === 1 && inputBuffer === '') {
       WriteToTerminal(tab.id, data).catch((error) => {
@@ -189,14 +169,14 @@ const terminal = new Terminal({
       })
       return
     }
-    
+
     // Batch only for multi-character input (paste operations)
     inputBuffer += data
-    
+
     if (inputTimeout) {
       clearTimeout(inputTimeout)
     }
-    
+
     // Immediate send for better responsiveness
     inputTimeout = setTimeout(() => {
       WriteToTerminal(tab.id, inputBuffer).catch((error) => {
@@ -212,11 +192,11 @@ const terminal = new Terminal({
   let resizeTimeout: NodeJS.Timeout | null = null
   terminal.onResize(({ cols, rows }) => {
     if (!tab.isRunning) return
-    
+
     if (resizeTimeout) {
       clearTimeout(resizeTimeout)
     }
-    
+
     resizeTimeout = setTimeout(() => {
       ResizeTerminalSession(tab.id, cols, rows).catch((error: any) => {
         console.error('Error resizing terminal:', error)
@@ -236,33 +216,39 @@ const initializeTab = async (tab: TerminalTab) => {
   tab.terminal.open(element)
 
   await nextTick()
-  
-  // Improved fitting with proper height calculation
-  if (tab.fitAddon) {
-    // Ensure the container has proper dimensions before fitting
-    const container = element.parentElement
-    if (container) {
-      const containerHeight = container.clientHeight - 16 // Account for padding
-      const charHeight = 18 // Approximate character height for font size 14
-      const headerHeight = 48 // Terminal header height
-      const availableHeight = containerHeight - headerHeight
-      const rows = Math.floor(availableHeight / charHeight)
-      
-      // Set minimum and maximum row limits
-      const finalRows = Math.min(Math.max(rows, 10), 50)
-      
-      // Force terminal to use calculated dimensions
-      tab.terminal.resize(80, finalRows)
-      await nextTick()
-      tab.fitAddon.fit()
-    }
+
+  // Initial fitting
+  if (tab.fitAddon && tab.terminal) {
+    const containerWidth = element.clientWidth
+    const containerHeight = element.clientHeight
+
+    // Calculate optimal dimensions
+    const fontSize = 14
+    const charWidth = fontSize * 0.6
+    const charHeight = fontSize * 1.2
+
+    // Calculate cols and rows
+    const cols = Math.max(10, Math.floor(containerWidth / charWidth))
+    const rows = Math.max(10, Math.floor(containerHeight / charHeight))
+
+    // Set initial dimensions
+    tab.terminal.resize(cols, rows)
+    tab.fitAddon.fit()
+
+    // Set minimum and maximum row limits
+    const finalRows = Math.min(Math.max(rows, 10), 50)
+
+    // Force terminal to use calculated dimensions
+    tab.terminal.resize(80, finalRows)
+    await nextTick()
+    tab.fitAddon.fit()
   }
 
   // Automatically start terminal session
   try {
     await CreateTerminalSession(tab.id, tab.type)
     tab.isRunning = true
-    
+
     // Focus terminal after short delay to ensure proper rendering
     setTimeout(() => {
       if (tab.terminal && activeTabId.value === tab.id) {
@@ -271,7 +257,9 @@ const initializeTab = async (tab: TerminalTab) => {
     }, 100)
   } catch (error) {
     console.error('Error starting terminal session:', error)
-    tab.terminal.writeln(`Error starting ${tab.type} session: ${error}`)
+    if (tab.terminal) {
+      tab.terminal.writeln(`Error starting ${tab.type} session: ${error}`)
+    }
   }
 }
 
@@ -291,7 +279,7 @@ const addTab = async (terminalType: string) => {
   tabs.value.push(tab)
   activeTabId.value = tab.id
   showAddTabMenu.value = false
-  
+
   // Save state to localStorage
   saveTerminalState()
 
@@ -346,7 +334,7 @@ const closeTab = async (tabId: string) => {
   if (tabIndex === -1) return
 
   const tab = tabs.value[tabIndex]
-  
+
   // Close terminal session
   try {
     await CloseTerminalSession(tabId)
@@ -362,7 +350,7 @@ const closeTab = async (tabId: string) => {
   // Remove tab
   tabs.value.splice(tabIndex, 1)
   terminalRefs.delete(tabId)
-  
+
   // Save state after tab removal
   saveTerminalState()
 
@@ -392,7 +380,7 @@ const clearActiveTerminal = () => {
 const pauseInactiveTerminals = () => {
   const now = Date.now()
   const INACTIVE_THRESHOLD = 5 * 60 * 1000 // 5 minutes of inactivity
-  
+
   tabs.value.forEach(tab => {
     if (tab.id !== activeTabId.value && !tab.isPaused && tab.terminal) {
       if (now - tab.lastActiveTime > INACTIVE_THRESHOLD) {
@@ -422,7 +410,7 @@ const resumeTerminal = async (tab: TerminalTab) => {
 // Optimized visibility handlers for when component is not visible
 const handleVisibilityChange = () => {
   isComponentVisible.value = !document.hidden
-  
+
   if (!isComponentVisible.value) {
     // Component not visible, start resource optimization timer
     resourceOptimizationTimer.value = window.setTimeout(() => {
@@ -442,7 +430,7 @@ const handleTerminalData = (event: { sessionID: string, data: string }) => {
   if (tab?.terminal && !tab.isPaused) {
     // Only process data for active, non-paused terminals
     tab.lastActiveTime = Date.now()
-    
+
     // Use requestAnimationFrame for smoother rendering
     requestAnimationFrame(() => {
       if (tab.terminal && !tab.isPaused) {
@@ -457,7 +445,7 @@ const handleTerminalExit = (event: { sessionID: string, message: string }) => {
   if (tab) {
     tab.isRunning = false
     tab.lastActiveTime = Date.now()
-    
+
     if (tab.terminal && !tab.isPaused) {
       requestAnimationFrame(() => {
         if (tab.terminal) {
@@ -469,27 +457,50 @@ const handleTerminalExit = (event: { sessionID: string, message: string }) => {
   }
 }
 
+// Add resize timeout ref
+const resizeTimeout = ref<number | null>(null)
+
 const handleResize = () => {
   const activeTab = tabs.value.find(t => t.id === activeTabId.value)
-  if (activeTab?.fitAddon) {
+  if (activeTab?.fitAddon && activeTab.terminal) {
     // Throttle resize operations to improve performance
     if (resizeTimeout.value) {
       clearTimeout(resizeTimeout.value)
     }
     resizeTimeout.value = window.setTimeout(() => {
-      if (activeTab.fitAddon) {
+      if (activeTab.fitAddon && activeTab.terminal) {
         try {
-          activeTab.fitAddon.fit()
+          // Get the container dimensions
+          const container = terminalRefs.get(activeTab.id)
+          if (container) {
+            const containerHeight = container.clientHeight
+            const containerWidth = container.clientWidth
+
+            // Calculate optimal dimensions
+            const fontSize = 14 // Match with terminal creation
+            const charWidth = fontSize * 0.6 // Approximate width of a character
+            const charHeight = fontSize * 1.2 // Approximate height of a line
+
+            // Calculate cols and rows
+            const cols = Math.max(10, Math.floor(containerWidth / charWidth))
+            const rows = Math.max(10, Math.floor(containerHeight / charHeight))
+
+            // Update terminal dimensions
+            activeTab.terminal.resize(cols, rows)
+            activeTab.fitAddon.fit()
+          }
         } catch (error) {
           console.warn('Terminal resize failed:', error)
         }
       }
-    }, 100) // Increased throttling to 100ms for better performance
+    }, 50) // Reduced throttling for better responsiveness
   }
 }
 
-// Add resize timeout ref
-const resizeTimeout = ref<number | null>(null)
+// Watch for window size changes using VueUse with throttling
+watch([width, height], () => {
+  handleResize()
+})
 
 // Close dropdown when clicking outside
 const handleClickOutside = (event: Event) => {
@@ -510,7 +521,7 @@ onMounted(async () => {
 
   // Load saved terminal state
   const savedState = loadTerminalState()
-  
+
   if (savedState && savedState.tabs && savedState.tabs.length > 0) {
     // Restore saved tabs
     for (const savedTab of savedState.tabs) {
@@ -526,14 +537,14 @@ onMounted(async () => {
       }
       tabs.value.push(tab)
     }
-    
+
     // Set active tab
     if (savedState.activeTabId && tabs.value.find(t => t.id === savedState.activeTabId)) {
       activeTabId.value = savedState.activeTabId
     } else {
       activeTabId.value = tabs.value[0].id
     }
-    
+
     // Initialize active tab
     await nextTick()
     const activeTab = tabs.value.find(t => t.id === activeTabId.value)
@@ -551,20 +562,19 @@ onMounted(async () => {
   EventsOn('terminal:data', handleTerminalData)
   EventsOn('terminal:exit', handleTerminalExit)
 
-  // Handle window resize and visibility changes
-  window.addEventListener('resize', handleResize)
+  // Handle click outside and visibility changes (resize is handled by VueUse watcher)
   document.addEventListener('click', handleClickOutside)
   document.addEventListener('visibilitychange', handleVisibilityChange)
-  
+
   // Start periodic resource optimization (every 2 minutes)
   const resourceOptInterval = setInterval(() => {
     if (isComponentVisible.value) {
       pauseInactiveTerminals()
     }
   }, 2 * 60 * 1000)
-  
-  // Store interval ID for cleanup
-  ;(window as any).__terminalResourceInterval = resourceOptInterval
+
+    // Store interval ID for cleanup
+    ; (window as any).__terminalResourceInterval = resourceOptInterval
 })
 
 onUnmounted(() => {
@@ -593,11 +603,10 @@ onUnmounted(() => {
       CloseTerminalSession(tab.id).catch(console.error)
     }
   })
-  
+
   // Remove event listeners
   EventsOff('terminal:data')
   EventsOff('terminal:exit')
-  window.removeEventListener('resize', handleResize)
   document.removeEventListener('click', handleClickOutside)
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
@@ -607,15 +616,22 @@ onUnmounted(() => {
 .terminal-container {
   display: flex;
   flex-direction: column;
-  height: 80vh; /* 80% of viewport height as requested */
+  height: 80vh;
+  /* 80% of viewport height as requested */
   min-height: 400px;
-  max-height: calc(100vh - 100px); /* Leave some space for other UI elements */
+  max-height: calc(100vh - 100px);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .terminal-content {
   flex: 1;
   position: relative;
-  overflow: hidden; /* Prevent scrollbars outside terminals */
+  overflow: hidden;
+  /* Prevent scrollbars outside terminals */
 }
 
 .terminal-tab {
@@ -670,7 +686,8 @@ onUnmounted(() => {
 .terminal-header {
   border-bottom: 1px solid #374151;
   background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-  min-height: 48px; /* Ensure adequate tab height */
+  min-height: 48px;
+  /* Ensure adequate tab height */
 }
 
 /* Dropdown menu styling */
@@ -703,7 +720,8 @@ button:hover .close-btn {
 /* Responsive design adjustments */
 @media (max-height: 600px) {
   .terminal-container {
-    height: 75vh; /* Slightly less on smaller screens */
+    height: 75vh;
+    /* Slightly less on smaller screens */
     min-height: 300px;
   }
 }
@@ -713,7 +731,7 @@ button:hover .close-btn {
     height: 70vh;
     min-height: 250px;
   }
-  
+
   .terminal-header {
     min-height: 40px;
   }

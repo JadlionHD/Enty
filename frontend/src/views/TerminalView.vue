@@ -7,10 +7,10 @@ import { onMounted, ref } from 'vue';
 </script>
 
 <template>
-  <div>
+  <div class="h-screen">
     <MainLayout>
       <template #center>
-        <div class="w-full h-full">
+        <div class="w-full h-full relative">
           <TerminalCLI />
         </div>
       </template>
