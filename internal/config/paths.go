@@ -41,6 +41,16 @@ func LivePathsConfigManager() *PathsConfigManager {
 			livePathsConfigLock.Unlock()
 		})
 	}
+	// Initialize and validate paths configuration on first load
+	if livePathsConfig != nil && livePathsConfig.config != nil {
+		if warnings := livePathsConfig.ValidateConfig(); len(warnings) > 0 {
+			fmt.Println("Paths configuration validation warnings:")
+			for _, warning := range warnings {
+				fmt.Println("  -", warning)
+			}
+		}
+		fmt.Println("Paths configuration loaded successfully")
+	}
 	return livePathsConfig
 }
 

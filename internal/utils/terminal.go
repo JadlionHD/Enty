@@ -343,8 +343,8 @@ func BuildIsolatedEnvForService(shellType, serviceName string) (envSlice []strin
 		}
 	}
 
-	pathsConfig := config.NewPathsConfigManager("config/paths.json")
-	if err := pathsConfig.LoadConfig(); err != nil {
+	pathsConfig := config.LivePathsConfigManager()
+	if pathsConfig == nil {
 		return os.Environ()
 	}
 
