@@ -1,60 +1,9 @@
-<template>
-  <div class="terminal-container w-full h-full bg-black">
-    <div class="terminal-header bg-gray-800 text-white px-4 py-2 flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <!-- Tab Navigation -->
-        <div class="flex gap-1">
-          <button v-for="tab in tabs" :key="tab.id" @click="switchToTab(tab.id)" :class="[
-            'px-3 py-1 text-xs rounded flex items-center gap-2',
-            activeTabId === tab.id
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-600 hover:bg-gray-500 text-gray-200'
-          ]">
-            <span>{{ tab.name }}</span>
-            <button @click.stop="closeTab(tab.id)" class="hover:bg-red-500 rounded px-1" v-if="tabs.length > 1">
-              ×
-            </button>
-          </button>
-        </div>
-
-        <!-- Add Tab Dropdown -->
-        <div class="relative">
-          <button @click="showAddTabMenu = !showAddTabMenu"
-            class="px-2 py-1 text-xs bg-green-600 hover:bg-green-700 rounded">
-            + Add Tab
-          </button>
-          <div v-if="showAddTabMenu"
-            class="absolute top-full left-0 mt-1 bg-gray-700 border border-gray-600 rounded shadow-lg z-10">
-            <button v-for="terminalType in availableTerminalTypes" :key="terminalType" @click="addTab(terminalType)"
-              class="block w-full px-4 py-2 text-left text-xs hover:bg-gray-600 text-white">
-              {{ terminalType.charAt(0).toUpperCase() + terminalType.slice(1) }}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex gap-2">
-        <button @click="clearActiveTerminal" class="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded">
-          Clear
-        </button>
-      </div>
-    </div>
-
-    <!-- Terminal Content Area -->
-    <div class="terminal-content flex-1 h-full">
-      <div v-for="tab in tabs" :key="tab.id" :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
-        :class="['terminal-tab', { 'hidden': activeTabId !== tab.id }]"
-        style="height:100%;width:100%;overflow:hidden;position:relative;"></div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, nextTick, reactive, watch } from 'vue'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
-import { useWindowSize, watchThrottled } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 import {
   CreateTerminalSession,
   WriteToTerminal,
@@ -82,6 +31,7 @@ const availableTerminalTypes = ref<string[]>([])
 const terminalRefs = reactive<Map<string, HTMLElement>>(new Map())
 const isComponentVisible = ref(true) // New: Track component visibility for resource optimization
 const resourceOptimizationTimer = ref<number | null>(null) // New: Timer for pausing inactive terminals
+const resourceOptimizationInterval = ref<number | null>(null) // New: Interval for periodic resource optimization
 
 // Use VueUse for window size tracking
 const { width, height } = useWindowSize()
@@ -297,35 +247,29 @@ const switchToTab = async (tabId: string) => {
     prevTab.lastActiveTime = Date.now()
   }
 
+  // Set new active tab
   activeTabId.value = tabId
   saveTerminalState() // Save active tab change
-  await nextTick()
 
+  // Find the target tab
   const tab = tabs.value.find(t => t.id === tabId)
   if (!tab) return
 
   // Update current tab's active time
   tab.lastActiveTime = Date.now()
 
+  // Handle tab initialization or resumption
   if (!tab.terminal || tab.isPaused) {
-    // Resume paused terminal or initialize new one
-    if (tab.isPaused) {
-      await resumeTerminal(tab)
-    } else {
-      await initializeTab(tab)
-    }
+    await nextTick()
+    tab.isPaused ? await resumeTerminal(tab) : await initializeTab(tab)
   } else {
-    // Re-fit terminal when switching tabs (throttled)
-    if (tab.fitAddon) {
+    // Optimize terminal fitting with a single requestAnimationFrame
       requestAnimationFrame(() => {
-        if (tab.fitAddon) {
+      if (tab.fitAddon && tab.terminal) {
           tab.fitAddon.fit()
-        }
-        if (tab.terminal) {
           tab.terminal.focus()
         }
       })
-    }
   }
 }
 
@@ -334,39 +278,45 @@ const closeTab = async (tabId: string) => {
   if (tabIndex === -1) return
 
   const tab = tabs.value[tabIndex]
+  const wasActive = activeTabId.value === tabId
 
-  // Close terminal session
-  try {
-    await CloseTerminalSession(tabId)
-  } catch (error) {
-    console.error('Error closing terminal session:', error)
-  }
-
-  // Dispose terminal instance
+  // Dispose terminal instance first to free resources immediately
   if (tab.terminal) {
     tab.terminal.dispose()
+    tab.terminal = null
   }
 
-  // Remove tab
+  // Close terminal session in parallel with UI updates
+  const closeSessionPromise = CloseTerminalSession(tabId)
+    .catch(error => console.error('Error closing terminal session:', error))
+
+  // Remove tab from array and refs map
   tabs.value.splice(tabIndex, 1)
   terminalRefs.delete(tabId)
 
   // Save state after tab removal
   saveTerminalState()
 
-  // Switch to another tab if this was active
-  if (activeTabId.value === tabId) {
+  // Handle tab switching if needed
+  if (wasActive) {
     if (tabs.value.length > 0) {
-      const newActiveIndex = Math.max(0, tabIndex - 1)
+      // Prefer the tab to the left of the closed one
+      const newActiveIndex = Math.min(tabIndex, tabs.value.length - 1)
       switchToTab(tabs.value[newActiveIndex].id)
     } else {
-      // Create a default tab if no tabs remain
-      const types = await GetAvailableTerminalTypes()
+      // Create a default tab if no tabs remain, using cached types if available
+      const types = availableTerminalTypes.value.length > 0 
+        ? availableTerminalTypes.value 
+        : await GetAvailableTerminalTypes()
+      
       if (types.length > 0) {
         addTab(types[0])
       }
     }
   }
+
+  // Ensure session is closed before returning
+  await closeSessionPromise
 }
 
 const clearActiveTerminal = () => {
@@ -567,14 +517,11 @@ onMounted(async () => {
   document.addEventListener('visibilitychange', handleVisibilityChange)
 
   // Start periodic resource optimization (every 2 minutes)
-  const resourceOptInterval = setInterval(() => {
+  resourceOptimizationInterval.value = window.setInterval(() => {
     if (isComponentVisible.value) {
       pauseInactiveTerminals()
     }
   }, 2 * 60 * 1000)
-
-    // Store interval ID for cleanup
-    ; (window as any).__terminalResourceInterval = resourceOptInterval
 })
 
 onUnmounted(() => {
@@ -583,15 +530,15 @@ onUnmounted(() => {
     clearTimeout(resizeTimeout.value)
   }
 
-  // Clean up resource optimization timer
+  // Clean up resource optimization timers
   if (resourceOptimizationTimer.value) {
     clearTimeout(resourceOptimizationTimer.value)
   }
 
   // Clean up resource optimization interval
-  if ((window as any).__terminalResourceInterval) {
-    clearInterval((window as any).__terminalResourceInterval)
-    delete (window as any).__terminalResourceInterval
+  if (resourceOptimizationInterval.value) {
+    clearInterval(resourceOptimizationInterval.value)
+    resourceOptimizationInterval.value = null
   }
 
   // Clean up all terminals and dispose properly
@@ -611,6 +558,59 @@ onUnmounted(() => {
   document.removeEventListener('visibilitychange', handleVisibilityChange)
 })
 </script>
+
+<template>
+  <div class="terminal-container w-full h-full bg-black">
+    <div class="terminal-header bg-gray-800 text-white px-4 py-2 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <!-- Tab Navigation -->
+        <div class="flex gap-1">
+          <button v-for="tab in tabs" :key="tab.id" @click="switchToTab(tab.id)" :class="[
+            'px-3 py-1 text-xs rounded flex items-center gap-2',
+            activeTabId === tab.id
+              ? 'bg-blue-600 text-white'
+              : 'bg-gray-600 hover:bg-gray-500 text-gray-200'
+          ]">
+            <span>{{ tab.name }}</span>
+            <button @click.stop="closeTab(tab.id)" class="hover:bg-red-500 rounded px-1" v-if="tabs.length > 1">
+              ×
+            </button>
+          </button>
+        </div>
+
+        <!-- Add Tab Dropdown -->
+        <div class="relative">
+          <button @click="showAddTabMenu = !showAddTabMenu"
+            class="px-2 py-1 text-xs bg-green-600 hover:bg-green-700 rounded">
+            + Add Tab
+          </button>
+          <div v-if="showAddTabMenu"
+            class="absolute top-full left-0 mt-1 bg-gray-700 border border-gray-600 rounded shadow-lg z-10">
+            <button v-for="terminalType in availableTerminalTypes" :key="terminalType" @click="addTab(terminalType)"
+              class="block w-full px-4 py-2 text-left text-xs hover:bg-gray-600 text-white">
+              {{ terminalType.charAt(0).toUpperCase() + terminalType.slice(1) }}
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex gap-2">
+        <button @click="clearActiveTerminal" class="px-3 py-1 text-xs bg-blue-600 hover:bg-blue-700 rounded">
+          Clear
+        </button>
+      </div>
+    </div>
+
+    <!-- Terminal Content Area -->
+    <div class="terminal-content flex-1 h-full">
+      <div v-for="tab in tabs" :key="tab.id" :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
+        :class="['terminal-tab', { 'hidden': activeTabId !== tab.id }]"
+        style="height:100%;width:100%;overflow:hidden;position:relative;"></div>
+    </div>
+  </div>
+</template>
+
+
 
 <style scoped>
 .terminal-container {
