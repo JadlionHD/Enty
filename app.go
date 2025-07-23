@@ -33,9 +33,14 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-// CreateTerminalSession creates a new terminal session
+/*
+CreateTerminalSession creates a new terminal session using only sessionID and terminalType.
+*/
 func (a *App) CreateTerminalSession(sessionID, terminalType string) error {
-	session, err := a.terminalManager.CreateSession(sessionID, terminalType)
+	session, err := a.terminalManager.CreateSession(utils.CreateSessionOptions{
+		SessionID:    sessionID,
+		TerminalType: terminalType,
+	})
 	if err != nil {
 		return err
 	}
@@ -48,14 +53,12 @@ func (a *App) CreateTerminalSession(sessionID, terminalType string) error {
 
 	// Start the read loop with callback functions for Wails events
 	session.StartReadLoop(
-		// onData callback - emit terminal output to frontend
 		func(data string) {
 			runtime.EventsEmit(a.ctx, "terminal:data", map[string]interface{}{
 				"sessionID": sessionID,
 				"data":      data,
 			})
 		},
-		// onExit callback - emit terminal exit to frontend
 		func(message string) {
 			runtime.EventsEmit(a.ctx, "terminal:exit", map[string]interface{}{
 				"sessionID": sessionID,

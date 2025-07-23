@@ -3,10 +3,13 @@ package utils
 import (
 	"fmt"
 	"io"
+	"os"
 	gosruntime "runtime"
+	"strings"
 	"sync"
 	"time"
 
+	"github.com/JadlionHD/Enty/internal/config"
 	"github.com/aymanbagabas/go-pty"
 )
 
@@ -18,6 +21,7 @@ type TerminalSession struct {
 	isRunning    bool
 	sessionID    string
 	terminalType string
+	// serviceName removed: PATH is now managed globally based on config
 	lastActivity time.Time
 	timeoutTimer *time.Timer
 	onTimeout    func(sessionID string)
@@ -33,12 +37,19 @@ func NewTerminalSession() *TerminalSession {
 	}
 }
 
-// NewTerminalSessionWithID creates a new terminal session with specific ID and type
-func NewTerminalSessionWithID(sessionID, terminalType string) *TerminalSession {
+// TerminalSessionOptions holds options for creating a terminal session
+type TerminalSessionOptions struct {
+	SessionID    string
+	TerminalType string
+}
+
+// NewTerminalSessionWithOptions creates a new terminal session with the specified options
+// This unified function replaces NewTerminalSessionWithID and NewTerminalSessionWithService
+func NewTerminalSessionWithOptions(opts TerminalSessionOptions) *TerminalSession {
 	return &TerminalSession{
 		isRunning:    false,
-		sessionID:    sessionID,
-		terminalType: terminalType,
+		sessionID:    opts.SessionID,
+		terminalType: opts.TerminalType,
 		lastActivity: time.Now(),
 		readBuffer:   make(chan []byte, 100), // Buffered channel for performance
 		writeBuffer:  make(chan []byte, 50),  // Buffered channel for writes
@@ -71,6 +82,11 @@ func (ts *TerminalSession) Start() error {
 
 	// Create command using PTY's Command method with optimizations
 	cmd := ptyInstance.Command(shell, args...)
+
+	// Set up isolated environment if service is specified
+	// This does NOT tamper with global environment - only affects this specific session
+	// Always build environment based on config, ignore serviceName
+	cmd.Env = BuildIsolatedEnvForService(ts.terminalType, "")
 
 	// Start the command
 	err = cmd.Start()
@@ -313,6 +329,75 @@ func (ts *TerminalSession) getShellCommand() (string, []string) {
 	}
 }
 
+func BuildIsolatedEnvForService(shellType, serviceName string) (envSlice []string) {
+	defer func() {
+		if r := recover(); r != nil {
+			envSlice = os.Environ()
+		}
+	}()
+	baseEnv := make(map[string]string)
+	for _, env := range os.Environ() {
+		parts := strings.SplitN(env, "=", 2)
+		if len(parts) == 2 {
+			baseEnv[parts[0]] = parts[1]
+		}
+	}
+
+	pathsConfig := config.NewPathsConfigManager("config/paths.json")
+	if err := pathsConfig.LoadConfig(); err != nil {
+		return os.Environ()
+	}
+
+	var pathComponents []string
+
+	if serviceName == "" {
+		// Prepend all valid service paths
+		for _, servicePath := range pathsConfig.GetAllServicePaths() {
+			if stat, err := os.Stat(servicePath); err == nil && stat.IsDir() {
+				pathComponents = append(pathComponents, servicePath)
+			}
+		}
+	} else {
+		// Add only the requested service path if valid
+		if servicePath, exists := pathsConfig.GetServicePath(serviceName); exists {
+			if stat, err := os.Stat(servicePath); err == nil && stat.IsDir() {
+				pathComponents = append(pathComponents, servicePath)
+			}
+		}
+	}
+
+	// Add default paths if valid
+	for _, p := range pathsConfig.GetDefaultPaths() {
+		if stat, err := os.Stat(p); err == nil && stat.IsDir() {
+			pathComponents = append(pathComponents, p)
+		}
+	}
+
+	// Add standard Unix paths if not on Windows
+	if gosruntime.GOOS != "windows" {
+		for _, p := range pathsConfig.GetStandardUnixPaths() {
+			if stat, err := os.Stat(p); err == nil && stat.IsDir() {
+				pathComponents = append(pathComponents, p)
+			}
+		}
+	}
+
+	sep := ":"
+	if gosruntime.GOOS == "windows" {
+		sep = ";"
+	}
+	pathStr := strings.Join(pathComponents, sep)
+	if pathStr == "" {
+		return os.Environ()
+	}
+	baseEnv["PATH"] = pathStr
+
+	for key, value := range baseEnv {
+		envSlice = append(envSlice, key+"="+value)
+	}
+	return
+}
+
 // startTimeoutTimer starts or resets the 60-minute inactivity timeout timer
 func (ts *TerminalSession) startTimeoutTimer() {
 	if ts.timeoutTimer != nil {
@@ -339,7 +424,6 @@ func (ts *TerminalSession) resetTimeoutTimer() {
 	ts.startTimeoutTimer()
 }
 
-// GetSessionInfo returns session information (optimized with RLock)
 func (ts *TerminalSession) GetSessionInfo() (sessionID, terminalType string, lastActivity time.Time) {
 	ts.mutex.RLock()
 	defer ts.mutex.RUnlock()
@@ -361,21 +445,29 @@ func NewTerminalManager() *TerminalManager {
 	}
 }
 
-// CreateSession creates a new terminal session
-func (tm *TerminalManager) CreateSession(sessionID, terminalType string) (*TerminalSession, error) {
+// CreateSessionOptions holds options for creating a terminal session via TerminalManager
+type CreateSessionOptions struct {
+	SessionID    string
+	TerminalType string
+}
+
+// CreateSession creates a new terminal session with the specified options
+// This unified method replaces the old CreateSession and CreateSessionWithService methods
+func (tm *TerminalManager) CreateSession(opts CreateSessionOptions) (*TerminalSession, error) {
 	tm.mutex.Lock()
 	defer tm.mutex.Unlock()
 
-	if _, exists := tm.sessions[sessionID]; exists {
-		return nil, fmt.Errorf("session %s already exists", sessionID)
+	if _, exists := tm.sessions[opts.SessionID]; exists {
+		return nil, fmt.Errorf("session %s already exists", opts.SessionID)
 	}
 
-	session := NewTerminalSessionWithID(sessionID, terminalType)
+	session := NewTerminalSessionWithOptions(TerminalSessionOptions(opts))
+
 	session.SetTimeoutCallback(func(id string) {
 		tm.removeSession(id)
 	})
 
-	tm.sessions[sessionID] = session
+	tm.sessions[opts.SessionID] = session
 	return session, nil
 }
 
