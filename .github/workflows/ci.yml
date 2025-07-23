@@ -31,7 +31,7 @@ jobs:
           submodules: recursive
       - uses: dAppServer/wails-build-action@main
         with:
-          wails-version: v2.10.1
+          wails-version: v2.10.2
           wails-build-webview2: embed
           build-name: ${{ matrix.build.name }}
           build-platform: ${{ matrix.build.platform }}
