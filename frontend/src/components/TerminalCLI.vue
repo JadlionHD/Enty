@@ -2,6 +2,7 @@
 import { ref, onMounted, onUnmounted, nextTick, reactive, watch } from 'vue'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
+import { ClipboardAddon } from '@xterm/addon-clipboard'
 import '@xterm/xterm/css/xterm.css'
 import { useWindowSize } from '@vueuse/core'
 import {
@@ -29,9 +30,13 @@ const activeTabId = ref<string>('')
 const showAddTabMenu = ref(false)
 const availableTerminalTypes = ref<string[]>([])
 const terminalRefs = reactive<Map<string, HTMLElement>>(new Map())
-const isComponentVisible = ref(true) // New: Track component visibility for resource optimization
-const resourceOptimizationTimer = ref<number | null>(null) // New: Timer for pausing inactive terminals
-const resourceOptimizationInterval = ref<number | null>(null) // New: Interval for periodic resource optimization
+const isComponentVisible = ref(true) // Track component visibility for resource optimization
+const resourceOptimizationTimer = ref<number | null>(null) // Timer for pausing inactive terminals
+const resourceOptimizationInterval = ref<number | null>(null) // Interval for periodic resource optimization
+const contextMenuVisible = ref(false) // Track context menu visibility
+const contextMenuPosition = ref({ x: 0, y: 0 }) // Context menu position
+const documentClickHandler = ref<((event: Event) => void) | null>(null) // Store document click handler ref
+const visibilityChangeHandler = ref<(() => void) | null>(null) // Store visibility change handler ref
 
 // Use VueUse for window size tracking
 const { width, height } = useWindowSize()
@@ -101,8 +106,29 @@ const createTerminalInstance = (tab: TerminalTab): Terminal => {
   })
 
   const fitAddon = new FitAddon()
+  const clipboardAddon = new ClipboardAddon()
+  
   terminal.loadAddon(fitAddon)
+  terminal.loadAddon(clipboardAddon)
   tab.fitAddon = fitAddon
+
+  // Add right-click context menu for copy/paste
+  terminal.attachCustomKeyEventHandler((event) => {
+    // Handle Ctrl+C and Ctrl+V
+    if (event.ctrlKey && event.key === 'c' && terminal.hasSelection()) {
+      navigator.clipboard.writeText(terminal.getSelection())
+      return false
+    }
+    if (event.ctrlKey && event.key === 'v') {
+      navigator.clipboard.readText().then(text => {
+        WriteToTerminal(tab.id, text).catch((error) => {
+          console.error('Error writing to terminal:', error)
+        })
+      })
+      return false
+    }
+    return true
+  })
 
   // Optimized input handling with reduced debouncing for better responsiveness
   let inputBuffer = ''
@@ -319,6 +345,40 @@ const closeTab = async (tabId: string) => {
   await closeSessionPromise
 }
 
+// Handle context menu for copy/paste
+const handleContextMenu = (event: MouseEvent, tabId: string) => {
+  event.preventDefault()
+  const tab = tabs.value.find(t => t.id === tabId)
+  if (tab?.terminal) {
+    contextMenuPosition.value = { x: event.clientX, y: event.clientY }
+    contextMenuVisible.value = true
+  }
+}
+
+const copyToClipboard = () => {
+  const activeTab = tabs.value.find(t => t.id === activeTabId.value)
+  if (activeTab?.terminal && activeTab.terminal.hasSelection()) {
+    navigator.clipboard.writeText(activeTab.terminal.getSelection())
+  }
+  hideContextMenu()
+}
+
+const pasteFromClipboard = () => {
+  const activeTab = tabs.value.find(t => t.id === activeTabId.value)
+  if (activeTab?.terminal && activeTab.isRunning) {
+    navigator.clipboard.readText().then(text => {
+      WriteToTerminal(activeTab.id, text).catch((error) => {
+        console.error('Error writing to terminal:', error)
+      })
+    })
+  }
+  hideContextMenu()
+}
+
+const hideContextMenu = () => {
+  contextMenuVisible.value = false
+}
+
 const clearActiveTerminal = () => {
   const activeTab = tabs.value.find(t => t.id === activeTabId.value)
   if (activeTab?.terminal) {
@@ -357,10 +417,10 @@ const resumeTerminal = async (tab: TerminalTab) => {
   }
 }
 
-// Optimized visibility handlers for when component is not visible
+// Optimized visibility handlers using Vue lifecycle instead of direct DOM manipulation
 const handleVisibilityChange = () => {
   isComponentVisible.value = !document.hidden
-
+  
   if (!isComponentVisible.value) {
     // Component not visible, start resource optimization timer
     resourceOptimizationTimer.value = window.setTimeout(() => {
@@ -372,6 +432,18 @@ const handleVisibilityChange = () => {
       clearTimeout(resourceOptimizationTimer.value)
       resourceOptimizationTimer.value = null
     }
+  }
+}
+
+// Close dropdown when clicking outside using proper event handler refs
+const handleClickOutside = (event: Event) => {
+  const target = event.target as Element
+  if (!target.closest('.relative')) {
+    showAddTabMenu.value = false
+  }
+  // Also hide context menu when clicking outside
+  if (contextMenuVisible.value && !target.closest('.context-menu')) {
+    hideContextMenu()
   }
 }
 
@@ -452,14 +524,6 @@ watch([width, height], () => {
   handleResize()
 })
 
-// Close dropdown when clicking outside
-const handleClickOutside = (event: Event) => {
-  const target = event.target as Element
-  if (!target.closest('.relative')) {
-    showAddTabMenu.value = false
-  }
-}
-
 onMounted(async () => {
   // Load available terminal types
   try {
@@ -513,8 +577,14 @@ onMounted(async () => {
   EventsOn('terminal:exit', handleTerminalExit)
 
   // Handle click outside and visibility changes (resize is handled by VueUse watcher)
-  document.addEventListener('click', handleClickOutside)
-  document.addEventListener('visibilitychange', handleVisibilityChange)
+  // Setup event handlers using refs to avoid direct DOM manipulation
+  documentClickHandler.value = handleClickOutside
+  visibilityChangeHandler.value = handleVisibilityChange
+
+  // Handle window resize and visibility changes using proper cleanup
+  window.addEventListener('resize', handleResize)
+  document.addEventListener('click', documentClickHandler.value)
+  document.addEventListener('visibilitychange', visibilityChangeHandler.value)
 
   // Start periodic resource optimization (every 2 minutes)
   resourceOptimizationInterval.value = window.setInterval(() => {
@@ -551,11 +621,19 @@ onUnmounted(() => {
     }
   })
 
-  // Remove event listeners
+  // Remove event listeners using refs for proper cleanup
   EventsOff('terminal:data')
   EventsOff('terminal:exit')
-  document.removeEventListener('click', handleClickOutside)
-  document.removeEventListener('visibilitychange', handleVisibilityChange)
+  
+  if (documentClickHandler.value) {
+    document.removeEventListener('click', documentClickHandler.value)
+    documentClickHandler.value = null
+  }
+  
+  if (visibilityChangeHandler.value) {
+    document.removeEventListener('visibilitychange', visibilityChangeHandler.value)
+    visibilityChangeHandler.value = null
+  }
 })
 </script>
 
@@ -605,7 +683,22 @@ onUnmounted(() => {
     <div class="terminal-content flex-1 h-full">
       <div v-for="tab in tabs" :key="tab.id" :ref="(el: any) => setTerminalRef(tab.id, el as HTMLElement)"
         :class="['terminal-tab', { 'hidden': activeTabId !== tab.id }]"
-        style="height:100%;width:100%;overflow:hidden;position:relative;"></div>
+        @contextmenu="handleContextMenu($event, tab.id)">
+      </div>
+    </div>
+
+    <!-- Context Menu for Copy/Paste -->
+    <div v-if="contextMenuVisible" 
+         :style="{ position: 'fixed', left: contextMenuPosition.x + 'px', top: contextMenuPosition.y + 'px', zIndex: 1000 }"
+         class="bg-gray-700 border border-gray-600 rounded shadow-lg py-1 min-w-[120px]">
+      <button @click="copyToClipboard" 
+              class="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-600 cursor-pointer">
+        Copy
+      </button>
+      <button @click="pasteFromClipboard" 
+              class="block w-full px-4 py-2 text-left text-sm text-white hover:bg-gray-600 cursor-pointer">
+        Paste
+      </button>
     </div>
   </div>
 </template>
