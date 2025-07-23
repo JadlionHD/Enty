@@ -3,18 +3,23 @@ package main
 import (
 	"context"
 	"fmt"
+	gosruntime "runtime"
 
-	"github.com/JadlionHD/Enty/internal/config"
+	"github.com/JadlionHD/Enty/internal/utils"
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 // App struct
 type App struct {
-	ctx context.Context
+	ctx             context.Context
+	terminalManager *utils.TerminalManager
 }
 
 // NewApp creates a new App application struct
 func NewApp() *App {
-	return &App{}
+	return &App{
+		terminalManager: utils.NewTerminalManager(),
+	}
 }
 
 // startup is called when the app starts. The context is saved
@@ -28,12 +33,89 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) GetMySqlConfig() (*config.ConfigVersionMySQL, error) {
-	conf, err := config.ReadConfig()
-
+/*
+CreateTerminalSession creates a new terminal session using only sessionID and terminalType.
+*/
+func (a *App) CreateTerminalSession(sessionID, terminalType string) error {
+	session, err := a.terminalManager.CreateSession(utils.CreateSessionOptions{
+		SessionID:    sessionID,
+		TerminalType: terminalType,
+	})
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	return conf, nil
+	err = session.Start()
+	if err != nil {
+		a.terminalManager.RemoveSession(sessionID)
+		return err
+	}
+
+	// Start the read loop with callback functions for Wails events
+	session.StartReadLoop(
+		func(data string) {
+			runtime.EventsEmit(a.ctx, "terminal:data", map[string]interface{}{
+				"sessionID": sessionID,
+				"data":      data,
+			})
+		},
+		func(message string) {
+			runtime.EventsEmit(a.ctx, "terminal:exit", map[string]interface{}{
+				"sessionID": sessionID,
+				"message":   message,
+			})
+			a.terminalManager.RemoveSession(sessionID)
+		},
+	)
+
+	return nil
+}
+
+// WriteToTerminal sends input to a specific terminal session
+func (a *App) WriteToTerminal(sessionID, input string) error {
+	session, err := a.terminalManager.GetSession(sessionID)
+	if err != nil {
+		return err
+	}
+	return session.Write(input)
+}
+
+// CloseTerminalSession closes a specific terminal session
+func (a *App) CloseTerminalSession(sessionID string) error {
+	return a.terminalManager.RemoveSession(sessionID)
+}
+
+// IsTerminalSessionRunning returns whether a specific session is running
+func (a *App) IsTerminalSessionRunning(sessionID string) bool {
+	session, err := a.terminalManager.GetSession(sessionID)
+	if err != nil {
+		return false
+	}
+	return session.IsRunning()
+}
+
+// ResizeTerminalSession resizes a specific terminal session
+func (a *App) ResizeTerminalSession(sessionID string, cols, rows int) error {
+	session, err := a.terminalManager.GetSession(sessionID)
+	if err != nil {
+		return err
+	}
+	return session.Resize(cols, rows)
+}
+
+// ListTerminalSessions returns all active terminal session IDs
+func (a *App) ListTerminalSessions() []string {
+	return a.terminalManager.ListSessions()
+}
+
+// GetAvailableTerminalTypes returns available terminal types for the current platform
+func (a *App) GetAvailableTerminalTypes() []string {
+	switch gosruntime.GOOS {
+	case "windows":
+		return []string{"powershell", "cmd"}
+	case "darwin", "linux":
+		return []string{"bash"}
+	default:
+		return []string{"bash"}
+	}
 }
