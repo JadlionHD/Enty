@@ -2,6 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { EventsOn, EventsOff, EventsEmit } from '../../wailsjs/runtime/runtime';
 import { DownloadFile } from '../../wailsjs/go/utils/utils';
+import { useToast } from '@nuxt/ui/runtime/composables/useToast.js';
 
 interface DownloadFile {
   name: string;
