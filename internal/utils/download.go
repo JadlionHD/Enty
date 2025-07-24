@@ -4,14 +4,18 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 func (u *utils) DownloadFile(name string, filename string, url string, buf int32) (err error) {
-	exist := u.IsDirExist(PATH_TEMP)
+
+	dirPath := filepath.Join(u.GetPwd(), PATH_TEMP)
+	exist := u.IsDirExist(dirPath)
 
 	ctx, cancel := context.WithCancel(u.ctx)
 	defer cancel()
@@ -62,6 +66,13 @@ func (u *utils) DownloadFile(name string, filename string, url string, buf int32
 			cancel()
 			runtime.EventsEmit(u.ctx, "download-cancelled", name)
 		}
+
+		// Close file first, or it will throw "it is being used by another process."
+		out.Close()
+		filePath := filepath.Join(u.GetPwd(), PATH_TEMP, filename)
+
+		remErr := os.Remove(filePath)
+		log.Printf("File cancelled: %s with err: %s", filePath, remErr)
 	})
 	defer runtime.EventsOffAll(u.ctx)
 
@@ -69,7 +80,10 @@ func (u *utils) DownloadFile(name string, filename string, url string, buf int32
 		select {
 		case <-ctx.Done():
 			runtime.EventsEmit(u.ctx, "download-cancelled", name)
-			os.Remove(fmt.Sprintf("%s/%s", PATH_TEMP, name)) // Clean up partial file
+			runtime.EventsOffAll(u.ctx)
+			filePath := filepath.Join(u.GetPwd(), PATH_TEMP, filename)
+			log.Printf("Cleanup partial file: %s", filePath)
+			os.Remove(filePath) // Clean up partial file
 			return ctx.Err()
 		default:
 			n, err := io.ReadFull(resp.Body, buffer)

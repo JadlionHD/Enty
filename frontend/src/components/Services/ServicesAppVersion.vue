@@ -1,27 +1,23 @@
 <script lang="ts" setup>
 import { h, resolveComponent, ref, onMounted, computed, watch } from 'vue';
-import { useInfiniteScroll } from '@vueuse/core';
 import type { TableColumn } from '@nuxt/ui';
-import { DownloadFile } from '../../../wailsjs/go/utils/utils';
 import { useDownloadStore } from '@/stores/download';
 
 const UBadge = resolveComponent('UBadge');
 const UButton = resolveComponent('UButton');
 
-interface Props {
-  name: string;
-  items: {
-    version: string;
-    downloadUrl: string;
-  }[];
-}
-
-const props = defineProps<Props>();
-
 type AppVersion = {
   version: string;
   downloadUrl: string;
+  installed?: boolean;
 };
+
+interface Props {
+  name: string;
+  items: AppVersion[];
+}
+
+const props = defineProps<Props>();
 
 const data = computed(() => props.items);
 const download = useDownloadStore();
@@ -30,7 +26,12 @@ const columns: TableColumn<AppVersion>[] = [
   {
     accessorKey: 'version',
     header: 'Version',
-    cell: ({ row }) => h('div', { class: 'font-mono font-medium' }, `v${row.getValue('version')}`),
+    cell: ({ row }) =>
+      h('div', { class: 'flex items-center gap-2' }, [
+        h('div', { class: 'font-mono font-medium' }, `v${row.getValue('version')}`),
+        row.original.installed &&
+          h(UBadge, { color: 'green', variant: 'subtle' }, () => 'Installed'),
+      ]),
   },
   {
     accessorKey: 'downloadUrl',
@@ -43,12 +44,11 @@ const columns: TableColumn<AppVersion>[] = [
             size: 'sm',
             variant: 'outline',
             icon: 'i-heroicons-arrow-down-tray',
+            disabled: download.isDownloading || row.original.installed,
+            color: row.original.installed ? 'neutral' : 'primary',
             onClick: async () => {
-              // window.open(row.getValue('downloadUrl'), '_blank');
-
               const name = `${props.name}-${row.getValue('version')}`;
               const url = row.getValue('downloadUrl');
-              console.log({ url, name }, row);
 
               try {
                 const resultDownload = await download.download(
@@ -63,7 +63,7 @@ const columns: TableColumn<AppVersion>[] = [
               }
             },
           },
-          () => 'Download',
+          () => (row.original.installed ? 'Installed' : 'Download'),
         ),
       ]);
     },

@@ -2,6 +2,7 @@ import { ref, computed } from 'vue';
 import { defineStore } from 'pinia';
 import { EventsOn, EventsOff, EventsEmit } from '../../wailsjs/runtime/runtime';
 import { DownloadFile } from '../../wailsjs/go/utils/utils';
+import { GetPwd } from '../../wailsjs/go/utils/utils';
 import { useToast } from '@nuxt/ui/runtime/composables/useToast.js';
 
 interface DownloadFile {
@@ -13,7 +14,6 @@ interface DownloadFile {
 
 export const useDownloadStore = defineStore('download', () => {
   const files = ref<DownloadFile[]>([]);
-  // TODO: next this
   const isDownloading = ref(false);
   const toast = useToast();
 
@@ -28,6 +28,8 @@ export const useDownloadStore = defineStore('download', () => {
         downloadedBytes: 0,
         progress: 0,
       });
+
+      isDownloading.value = true;
       // Call callback with initial state
       cb(name, totalBytes, 0, 0);
     });
@@ -52,6 +54,7 @@ export const useDownloadStore = defineStore('download', () => {
         title: `Successfully installed ${name}`,
         icon: 'i-lucide-check',
       });
+      isDownloading.value = false;
       clean();
     });
 
@@ -61,6 +64,7 @@ export const useDownloadStore = defineStore('download', () => {
         title: `Cancelled installing ${name}`,
         icon: 'i-lucide-file-x-2',
       });
+      isDownloading.value = false;
       clean();
     });
   };
@@ -82,10 +86,12 @@ export const useDownloadStore = defineStore('download', () => {
 
   const cancel = () => {
     EventsEmit('cancel-download-file');
+    isDownloading.value = false;
   };
 
   const clean = () => {
     files.value = [];
   };
+
   return { files, toast, isDownloading, on, off, download, cancel, clean };
 });

@@ -5,16 +5,13 @@ import (
 	"path/filepath"
 )
 
-const (
-	PATH_TEMP = "temp"
-)
-
 func (u *utils) GetTempDirectory() ([]string, error) {
 
-	exist := u.IsDirExist(PATH_TEMP)
+	var dirPath = filepath.Join(u.GetPwd(), PATH_TEMP)
+	exist := u.IsDirExist(dirPath)
 
 	if !exist {
-		u.Mkdir("temp")
+		u.Mkdir(dirPath)
 	}
 
 	var files []string

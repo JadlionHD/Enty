@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { onMounted, onUnmounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
 import ServicesAppVersion from './ServicesAppVersion.vue';
 import type { ConfigVersionMySQL } from '@/types';
 import { GetMySqlConfig } from '../../../wailsjs/go/config/configs';
 import { GetTempDirectory, GetUserOS } from '../../../wailsjs/go/utils/utils';
-import { EventsOn, EventsOff } from '../../../wailsjs/runtime/runtime';
+import { useDownloadStore } from '@/stores/download';
 
 const osMap = {
   windows: 'Windows',
@@ -14,27 +14,46 @@ const osMap = {
 
 const items = ref<{ version: string; downloadUrl: string }[]>([]);
 const isLoading = ref(true);
+const download = useDownloadStore();
 
-onMounted(async () => {
+const refreshItems = async () => {
   try {
     const OS = await GetUserOS();
-    const dir = await GetTempDirectory();
-    console.log(dir);
+    const tempFiles = await GetTempDirectory();
     const data = (await GetMySqlConfig()) as ConfigVersionMySQL;
     const currentOs = osMap[OS as keyof typeof osMap];
 
     if (data && data.mysql) {
       const osData = data.mysql.find((v) => v.os === currentOs);
       if (osData?.data) {
-        // Transform the data to match ServicesAppVersion props
-        items.value = osData.data.map((item) => ({
-          version: item.version,
-          downloadUrl: item.link, // Handle different property names
-        }));
+        items.value = osData.data.map((item) => {
+          const fileName = `mysql-${item.version}.zip`;
+          const isInstalled = tempFiles.some((path) => path.endsWith(fileName));
+
+          return {
+            version: item.version,
+            downloadUrl: item.link,
+            installed: isInstalled,
+          };
+        });
       }
     }
   } catch (error) {
     console.error('Error fetching MySQL config:', error);
+  }
+};
+
+const progress = computed(() => download.files[0]?.progress);
+
+watch(progress, (newValue) => {
+  if (newValue === 100) {
+    refreshItems();
+  }
+});
+
+onMounted(async () => {
+  try {
+    await refreshItems();
   } finally {
     isLoading.value = false;
   }
