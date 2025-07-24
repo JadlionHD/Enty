@@ -1,8 +1,9 @@
 {
-  "name": "frontend",
-  "version": "0.0.0",
+  "name": "enty",
+  "version": "1.0.0",
   "private": true,
   "type": "module",
+  "license": "GPL-3.0-only",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
