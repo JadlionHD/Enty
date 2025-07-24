@@ -19,6 +19,7 @@ const download = useDownloadStore();
 const refreshItems = async () => {
   try {
     const OS = await GetUserOS();
+    // TODO: next unzip file
     const tempFiles = await GetTempDirectory();
     const data = (await GetMySqlConfig()) as ConfigVersionMySQL;
     const currentOs = osMap[OS as keyof typeof osMap];
