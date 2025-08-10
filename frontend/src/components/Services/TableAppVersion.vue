@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { h, resolveComponent, ref, onMounted, computed, watch } from 'vue';
+import { h, resolveComponent, ref, computed, watch } from 'vue';
 import type { TableColumn } from '@nuxt/ui';
 import { useDownloadStore } from '@/stores/download';
 
@@ -51,12 +51,7 @@ const columns: TableColumn<AppVersion>[] = [
               const url = row.getValue('downloadUrl');
 
               try {
-                const resultDownload = await download.download(
-                  name,
-                  `${name}.zip`,
-                  url as string,
-                  32,
-                );
+                await download.download(name, `${name}.zip`, url as string, 32);
               } catch (e) {
                 console.error('error while downloading', e);
                 download.clean();
@@ -74,9 +69,10 @@ const searchInput = ref('');
 const globalFilter = ref('');
 
 // Debounce function
+// eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
 const debounce = (func: Function, wait: number) => {
   let timeout: NodeJS.Timeout;
-  return function executedFunction(...args: any[]) {
+  return function executedFunction(...args: unknown[]) {
     const later = () => {
       clearTimeout(timeout);
       func(...args);

@@ -1,21 +1,21 @@
 export type ServiceInstanceState = 'running' | 'stopped' | 'none';
 
 export interface PiniaConfigStore {
-  mysql?: ConfigVersionMySQL;
+  app?: ConfigVersionApp;
 }
 
-export interface ConfigVersionMySQL {
-  mysql: ConfigArchInfoMySQL[];
+export interface ConfigVersionApp {
+  app: ConfigArchInfoApp[];
 }
 
-export type ConfigOSMySQL = 'Windows' | 'Linux' | 'macOS';
+export type ConfigOSApp = 'Windows' | 'Linux' | 'macOS';
 
-export interface ConfigArchInfoMySQL {
-  os: ConfigOSMySQL;
-  data: ConfigDataMySQL[];
+export interface ConfigArchInfoApp {
+  os: ConfigOSApp;
+  data: ConfigDataApp[];
 }
 
-export interface ConfigDataMySQL {
+export interface ConfigDataApp {
   version: string;
   gpg?: string;
   link: string;

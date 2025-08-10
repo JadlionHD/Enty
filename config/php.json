@@ -1,0 +1,49 @@
+{
+  "app": [
+    {
+      "os": "Windows",
+      "data": [
+        {
+          "version": "8.4.11",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.4.11-nts-Win32-vs17-x64.zip"
+        },
+        {
+          "version": "8.4.11",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.4.11-Win32-vs17-x64.zip"
+        },
+        {
+          "version": "8.3.24",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.3.24-nts-Win32-vs16-x64.zip"
+        },
+        {
+          "version": "8.3.24",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.3.24-Win32-vs16-x64.zip"
+        },
+        {
+          "version": "8.2.29",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.2.29-nts-Win32-vs16-x64.zip"
+        },
+        {
+          "version": "8.2.29",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.2.29-Win32-vs16-x64.zip"
+        },
+        {
+          "version": "8.1.33",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.1.33-nts-Win32-vs16-x64.zip"
+        },
+        {
+          "version": "8.1.33",
+          "gpg": "",
+          "link": "https://windows.php.net/downloads/releases/php-8.1.33-Win32-vs16-x64.zip"
+        }
+      ]
+    }
+  ]
+}

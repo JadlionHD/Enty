@@ -1,0 +1,209 @@
+{
+  "app": [
+    {
+      "os": "Windows",
+      "data": [
+        {
+          "version": "2.4.65",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.65-250724-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.65",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.65-250724-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.64",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.64-250710-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.64",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.64-250710-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.63",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.63-250123-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.63",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.63-250123-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.62",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.62-240718-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.62",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.62-240718-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.61",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.61-240703-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.61",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.61-240703-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.60",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.60-240701-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.60",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.60-240701-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.59",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.59-240404-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.59",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.59-240404-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.58",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.58-231019-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.58",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.58-231019-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.57",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.57-230406-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.57",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.57-230406-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.57",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.57-230406-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.57",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.57-230406-win32-vs16.zip"
+        },
+        {
+          "version": "2.4.56",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.56-230307-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.56",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.56-230307-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.56",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.56-230307-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.56",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.56-230307-win32-vs16.zip"
+        },
+        {
+          "version": "2.4.55",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.55-230118-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.55",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.55-230118-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.55",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.55-230118-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.55",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.55-230118-win32-vs16.zip"
+        },
+        {
+          "version": "2.4.54",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.54-220608-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.54",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.54-220608-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.54",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.54-220608-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.54",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.54-220608-win32-vs16.zip"
+        },
+        {
+          "version": "2.4.53",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.53-220316-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.53",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.53-220316-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.53",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.53-220316-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.53",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.53-220316-win32-vs16.zip"
+        },
+        {
+          "version": "2.4.51",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.51-211007-win64-VS17.zip"
+        },
+        {
+          "version": "2.4.51",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/VS17/binaries/httpd-2.4.51-211007-win32-VS17.zip"
+        },
+        {
+          "version": "2.4.51",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.51-211007-win64-vs16.zip"
+        },
+        {
+          "version": "2.4.51",
+          "gpg": "",
+          "link": "https://www.apachelounge.com/download/vs16/binaries/httpd-2.4.51-211007-win32-vs16.zip"
+        }
+      ]
+    }
+  ]
+}

@@ -100,6 +100,25 @@ func (u *utils) DownloadFile(name string, filename string, url string, buf int32
 
 			if err == io.EOF || err == io.ErrUnexpectedEOF {
 				runtime.EventsEmit(u.ctx, "finish-download-file", name)
+
+				// If file is a zip, extract it
+				if filepath.Ext(filename) == ".zip" {
+					sourcePath := filepath.Join(u.GetPwd(), PATH_TEMP, filename)
+					destinationPath := filepath.Join(u.GetPwd(), PATH_BIN, filename)
+
+					extractErr := u.UnzipFile(sourcePath, destinationPath)
+					if extractErr != nil {
+						log.Printf("Failed to extract file %s: %v", filename, extractErr)
+						return extractErr
+					}
+
+					// Remove the zip file after successful extraction
+					if err := os.Remove(sourcePath); err != nil {
+						log.Printf("Failed to remove zip file %s: %v", filename, err)
+					}
+
+					runtime.EventsEmit(u.ctx, "file-extracted", name)
+				}
 				return nil
 			}
 			if err != nil {

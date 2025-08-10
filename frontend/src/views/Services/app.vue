@@ -6,6 +6,7 @@ import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
 import type { ChipProps, InputMenuItem, TabsItem } from '@nuxt/ui';
+import AppVersions from '@/components/Services/AppVersions.vue';
 
 const tabs: TabsItem[] = [
   {
@@ -89,9 +90,7 @@ const version = ref(
                 </template>
 
                 <template #versions="{}">
-                  <template v-if="item.name === 'mysql'">
-                    <MySQLVersion />
-                  </template>
+                  <AppVersions :app-name="item.name" />
                 </template>
 
                 <template #options="{}">

@@ -1,12 +1,12 @@
 export namespace config {
 	
-	export class ConfigDataMySQL {
+	export class ConfigDataApp {
 	    version: string;
 	    gpg?: string;
 	    link: string;
 	
 	    static createFrom(source: any = {}) {
-	        return new ConfigDataMySQL(source);
+	        return new ConfigDataApp(source);
 	    }
 	
 	    constructor(source: any = {}) {
@@ -16,18 +16,18 @@ export namespace config {
 	        this.link = source["link"];
 	    }
 	}
-	export class ConfigArchInfoMySQL {
+	export class ConfigArchInfoApp {
 	    os: string;
-	    data: ConfigDataMySQL[];
+	    data: ConfigDataApp[];
 	
 	    static createFrom(source: any = {}) {
-	        return new ConfigArchInfoMySQL(source);
+	        return new ConfigArchInfoApp(source);
 	    }
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
 	        this.os = source["os"];
-	        this.data = this.convertValues(source["data"], ConfigDataMySQL);
+	        this.data = this.convertValues(source["data"], ConfigDataApp);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {
@@ -49,16 +49,16 @@ export namespace config {
 		}
 	}
 	
-	export class ConfigVersionMySQL {
-	    mysql: ConfigArchInfoMySQL[];
+	export class ConfigVersionApp {
+	    app: ConfigArchInfoApp[];
 	
 	    static createFrom(source: any = {}) {
-	        return new ConfigVersionMySQL(source);
+	        return new ConfigVersionApp(source);
 	    }
 	
 	    constructor(source: any = {}) {
 	        if ('string' === typeof source) source = JSON.parse(source);
-	        this.mysql = this.convertValues(source["mysql"], ConfigArchInfoMySQL);
+	        this.app = this.convertValues(source["app"], ConfigArchInfoApp);
 	    }
 	
 		convertValues(a: any, classs: any, asMap: boolean = false): any {

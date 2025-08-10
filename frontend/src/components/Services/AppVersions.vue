@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, watch } from 'vue';
-import ServicesAppVersion from './ServicesAppVersion.vue';
-import type { ConfigVersionMySQL } from '@/types';
-import { GetMySqlConfig } from '../../../wailsjs/go/config/configs';
+import { computed, onMounted, ref, watch } from 'vue';
+import type { ConfigVersionApp } from '@/types';
+import { GetAppConfig } from '../../../wailsjs/go/config/configs';
 import { GetTempDirectory, GetUserOS } from '../../../wailsjs/go/utils/utils';
 import { useDownloadStore } from '@/stores/download';
+
+const props = defineProps<{
+  appName: string;
+}>();
 
 const osMap = {
   windows: 'Windows',
@@ -19,16 +22,15 @@ const download = useDownloadStore();
 const refreshItems = async () => {
   try {
     const OS = await GetUserOS();
-    // TODO: next unzip file
     const tempFiles = await GetTempDirectory();
-    const data = (await GetMySqlConfig()) as ConfigVersionMySQL;
+    const data = (await GetAppConfig(`${props.appName}.json`)) as ConfigVersionApp;
     const currentOs = osMap[OS as keyof typeof osMap];
 
-    if (data && data.mysql) {
-      const osData = data.mysql.find((v) => v.os === currentOs);
+    if (data && data.app) {
+      const osData = data.app.find((v) => v.os === currentOs);
       if (osData?.data) {
         items.value = osData.data.map((item) => {
-          const fileName = `mysql-${item.version}.zip`;
+          const fileName = `${props.appName}-${currentOs}-${item.version}.zip`;
           const isInstalled = tempFiles.some((path) => path.endsWith(fileName));
 
           return {
@@ -40,7 +42,7 @@ const refreshItems = async () => {
       }
     }
   } catch (error) {
-    console.error('Error fetching MySQL config:', error);
+    console.error(`Error fetching ${props.appName} config:`, error);
   }
 };
 
@@ -51,6 +53,15 @@ watch(progress, (newValue) => {
     refreshItems();
   }
 });
+
+watch(
+  () => props.appName,
+  async () => {
+    isLoading.value = true;
+    await refreshItems();
+    isLoading.value = false;
+  },
+);
 
 onMounted(async () => {
   try {
@@ -64,11 +75,11 @@ onMounted(async () => {
 <template>
   <div>
     <div v-if="isLoading" class="text-center font-bold">Loading...</div>
-    <ServicesAppVersion
+    <TableAppVersion
       v-else-if="items.length > 0"
       :items="items"
-      name="mysql"
-    ></ServicesAppVersion>
+      :name="`app-table-service-${appName}`"
+    ></TableAppVersion>
     <div v-else>No versions available</div>
   </div>
 </template>
