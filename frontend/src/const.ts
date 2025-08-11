@@ -20,6 +20,20 @@ export const SERVICE_APPS = [
     plainIcon: 'i-devicon-plain:nodejs',
     coloredIcon: 'i-devicon:nodejs',
   },
+  {
+    name: 'apache',
+    label: 'Apache',
+    description: 'Apache webserver runtime',
+    plainIcon: 'i-devicon-plain:apache',
+    coloredIcon: 'i-devicon:apache',
+  },
+  {
+    name: 'nginx',
+    label: 'Nginx',
+    description: 'Nginx webserver runtime',
+    plainIcon: 'i-skill-icons:nginx',
+    coloredIcon: 'i-devicon:nginx',
+  },
 ];
 
 export const goosList =

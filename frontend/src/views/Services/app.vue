@@ -90,7 +90,7 @@ const version = ref(
                 </template>
 
                 <template #versions="{}">
-                  <AppVersions :app-name="item.name" />
+                  <AppVersions :app-name="item.name" :key="`app-table-service-${item.name}`" />
                 </template>
 
                 <template #options="{}">

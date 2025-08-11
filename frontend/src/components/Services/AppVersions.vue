@@ -54,15 +54,6 @@ watch(progress, (newValue) => {
   }
 });
 
-watch(
-  () => props.appName,
-  async () => {
-    isLoading.value = true;
-    await refreshItems();
-    isLoading.value = false;
-  },
-);
-
 onMounted(async () => {
   try {
     await refreshItems();
@@ -75,11 +66,7 @@ onMounted(async () => {
 <template>
   <div>
     <div v-if="isLoading" class="text-center font-bold">Loading...</div>
-    <TableAppVersion
-      v-else-if="items.length > 0"
-      :items="items"
-      :name="`app-table-service-${appName}`"
-    ></TableAppVersion>
+    <TableAppVersion v-else-if="items.length > 0" :items="items" :name="appName"></TableAppVersion>
     <div v-else>No versions available</div>
   </div>
 </template>
