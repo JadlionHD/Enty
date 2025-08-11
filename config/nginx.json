@@ -1,0 +1,394 @@
+{
+  "app": [
+    {
+      "os": "Windows",
+      "data": [
+        {
+          "version": "1.29.0",
+          "gpg": "https://nginx.org/download/nginx-1.29.0.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.29.0.zip"
+        },
+        {
+          "version": "1.27.5",
+          "gpg": "https://nginx.org/download/nginx-1.27.5.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.5.zip"
+        },
+        {
+          "version": "1.27.4",
+          "gpg": "https://nginx.org/download/nginx-1.27.4.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.4.zip"
+        },
+        {
+          "version": "1.27.3",
+          "gpg": "https://nginx.org/download/nginx-1.27.3.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.3.zip"
+        },
+        {
+          "version": "1.27.2",
+          "gpg": "https://nginx.org/download/nginx-1.27.2.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.2.zip"
+        },
+        {
+          "version": "1.27.1",
+          "gpg": "https://nginx.org/download/nginx-1.27.1.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.1.zip"
+        },
+        {
+          "version": "1.27.0",
+          "gpg": "https://nginx.org/download/nginx-1.27.0.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.27.0.zip"
+        },
+        {
+          "version": "1.25.5",
+          "gpg": "https://nginx.org/download/nginx-1.25.5.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.5.zip"
+        },
+        {
+          "version": "1.25.4",
+          "gpg": "https://nginx.org/download/nginx-1.25.4.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.4.zip"
+        },
+        {
+          "version": "1.25.3",
+          "gpg": "https://nginx.org/download/nginx-1.25.3.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.3.zip"
+        },
+        {
+          "version": "1.25.2",
+          "gpg": "https://nginx.org/download/nginx-1.25.2.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.2.zip"
+        },
+        {
+          "version": "1.25.1",
+          "gpg": "https://nginx.org/download/nginx-1.25.1.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.1.zip"
+        },
+        {
+          "version": "1.25.0",
+          "gpg": "https://nginx.org/download/nginx-1.25.0.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.25.0.zip"
+        },
+        {
+          "version": "1.23.4",
+          "gpg": "https://nginx.org/download/nginx-1.23.4.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.23.4.zip"
+        },
+        {
+          "version": "1.23.3",
+          "gpg": "https://nginx.org/download/nginx-1.23.3.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.23.3.zip"
+        },
+        {
+          "version": "1.23.2",
+          "gpg": "https://nginx.org/download/nginx-1.23.2.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.23.2.zip"
+        },
+        {
+          "version": "1.23.1",
+          "gpg": "https://nginx.org/download/nginx-1.23.1.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.23.1.zip"
+        },
+        {
+          "version": "1.23.0",
+          "gpg": "https://nginx.org/download/nginx-1.23.0.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.23.0.zip"
+        },
+        {
+          "version": "1.21.6",
+          "gpg": "https://nginx.org/download/nginx-1.21.6.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.6.zip"
+        },
+        {
+          "version": "1.21.5",
+          "gpg": "https://nginx.org/download/nginx-1.21.5.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.5.zip"
+        },
+        {
+          "version": "1.21.4",
+          "gpg": "https://nginx.org/download/nginx-1.21.4.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.4.zip"
+        },
+        {
+          "version": "1.21.3",
+          "gpg": "https://nginx.org/download/nginx-1.21.3.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.3.zip"
+        },
+        {
+          "version": "1.21.2",
+          "gpg": "https://nginx.org/download/nginx-1.21.2.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.2.zip"
+        },
+        {
+          "version": "1.21.1",
+          "gpg": "https://nginx.org/download/nginx-1.21.1.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.1.zip"
+        },
+        {
+          "version": "1.21.0",
+          "gpg": "https://nginx.org/download/nginx-1.21.0.zip.asc",
+          "link": "https://nginx.org/download/nginx-1.21.0.zip"
+        }
+      ]
+    },
+    {
+      "os": "Linux",
+      "data": [
+        {
+          "version": "1.29.0",
+          "gpg": "https://nginx.org/download/nginx-1.29.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.29.0.tar.gz"
+        },
+        {
+          "version": "1.27.5",
+          "gpg": "https://nginx.org/download/nginx-1.27.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.5.tar.gz"
+        },
+        {
+          "version": "1.27.4",
+          "gpg": "https://nginx.org/download/nginx-1.27.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.4.tar.gz"
+        },
+        {
+          "version": "1.27.3",
+          "gpg": "https://nginx.org/download/nginx-1.27.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.3.tar.gz"
+        },
+        {
+          "version": "1.27.2",
+          "gpg": "https://nginx.org/download/nginx-1.27.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.2.tar.gz"
+        },
+        {
+          "version": "1.27.1",
+          "gpg": "https://nginx.org/download/nginx-1.27.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.1.tar.gz"
+        },
+        {
+          "version": "1.27.0",
+          "gpg": "https://nginx.org/download/nginx-1.27.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.0.tar.gz"
+        },
+        {
+          "version": "1.25.5",
+          "gpg": "https://nginx.org/download/nginx-1.25.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.5.tar.gz"
+        },
+        {
+          "version": "1.25.4",
+          "gpg": "https://nginx.org/download/nginx-1.25.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.4.tar.gz"
+        },
+        {
+          "version": "1.25.3",
+          "gpg": "https://nginx.org/download/nginx-1.25.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.3.tar.gz"
+        },
+        {
+          "version": "1.25.2",
+          "gpg": "https://nginx.org/download/nginx-1.25.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.2.tar.gz"
+        },
+        {
+          "version": "1.25.1",
+          "gpg": "https://nginx.org/download/nginx-1.25.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.1.tar.gz"
+        },
+        {
+          "version": "1.25.0",
+          "gpg": "https://nginx.org/download/nginx-1.25.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.0.tar.gz"
+        },
+        {
+          "version": "1.23.4",
+          "gpg": "https://nginx.org/download/nginx-1.23.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.4.tar.gz"
+        },
+        {
+          "version": "1.23.3",
+          "gpg": "https://nginx.org/download/nginx-1.23.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.3.tar.gz"
+        },
+        {
+          "version": "1.23.2",
+          "gpg": "https://nginx.org/download/nginx-1.23.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.2.tar.gz"
+        },
+        {
+          "version": "1.23.1",
+          "gpg": "https://nginx.org/download/nginx-1.23.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.1.tar.gz"
+        },
+        {
+          "version": "1.23.0",
+          "gpg": "https://nginx.org/download/nginx-1.23.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.0.tar.gz"
+        },
+        {
+          "version": "1.21.6",
+          "gpg": "https://nginx.org/download/nginx-1.21.6.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.6.tar.gz"
+        },
+        {
+          "version": "1.21.5",
+          "gpg": "https://nginx.org/download/nginx-1.21.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.5.tar.gz"
+        },
+        {
+          "version": "1.21.4",
+          "gpg": "https://nginx.org/download/nginx-1.21.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.4.tar.gz"
+        },
+        {
+          "version": "1.21.3",
+          "gpg": "https://nginx.org/download/nginx-1.21.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.3.tar.gz"
+        },
+        {
+          "version": "1.21.2",
+          "gpg": "https://nginx.org/download/nginx-1.21.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.2.tar.gz"
+        },
+        {
+          "version": "1.21.1",
+          "gpg": "https://nginx.org/download/nginx-1.21.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.1.tar.gz"
+        },
+        {
+          "version": "1.21.0",
+          "gpg": "https://nginx.org/download/nginx-1.21.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.0.tar.gz"
+        }
+      ]
+    },
+    {
+      "os": "macOS",
+      "data": [
+        {
+          "version": "1.29.0",
+          "gpg": "https://nginx.org/download/nginx-1.29.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.29.0.tar.gz"
+        },
+        {
+          "version": "1.27.5",
+          "gpg": "https://nginx.org/download/nginx-1.27.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.5.tar.gz"
+        },
+        {
+          "version": "1.27.4",
+          "gpg": "https://nginx.org/download/nginx-1.27.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.4.tar.gz"
+        },
+        {
+          "version": "1.27.3",
+          "gpg": "https://nginx.org/download/nginx-1.27.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.3.tar.gz"
+        },
+        {
+          "version": "1.27.2",
+          "gpg": "https://nginx.org/download/nginx-1.27.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.2.tar.gz"
+        },
+        {
+          "version": "1.27.1",
+          "gpg": "https://nginx.org/download/nginx-1.27.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.1.tar.gz"
+        },
+        {
+          "version": "1.27.0",
+          "gpg": "https://nginx.org/download/nginx-1.27.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.27.0.tar.gz"
+        },
+        {
+          "version": "1.25.5",
+          "gpg": "https://nginx.org/download/nginx-1.25.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.5.tar.gz"
+        },
+        {
+          "version": "1.25.4",
+          "gpg": "https://nginx.org/download/nginx-1.25.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.4.tar.gz"
+        },
+        {
+          "version": "1.25.3",
+          "gpg": "https://nginx.org/download/nginx-1.25.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.3.tar.gz"
+        },
+        {
+          "version": "1.25.2",
+          "gpg": "https://nginx.org/download/nginx-1.25.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.2.tar.gz"
+        },
+        {
+          "version": "1.25.1",
+          "gpg": "https://nginx.org/download/nginx-1.25.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.1.tar.gz"
+        },
+        {
+          "version": "1.25.0",
+          "gpg": "https://nginx.org/download/nginx-1.25.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.25.0.tar.gz"
+        },
+        {
+          "version": "1.23.4",
+          "gpg": "https://nginx.org/download/nginx-1.23.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.4.tar.gz"
+        },
+        {
+          "version": "1.23.3",
+          "gpg": "https://nginx.org/download/nginx-1.23.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.3.tar.gz"
+        },
+        {
+          "version": "1.23.2",
+          "gpg": "https://nginx.org/download/nginx-1.23.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.2.tar.gz"
+        },
+        {
+          "version": "1.23.1",
+          "gpg": "https://nginx.org/download/nginx-1.23.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.1.tar.gz"
+        },
+        {
+          "version": "1.23.0",
+          "gpg": "https://nginx.org/download/nginx-1.23.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.23.0.tar.gz"
+        },
+        {
+          "version": "1.21.6",
+          "gpg": "https://nginx.org/download/nginx-1.21.6.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.6.tar.gz"
+        },
+        {
+          "version": "1.21.5",
+          "gpg": "https://nginx.org/download/nginx-1.21.5.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.5.tar.gz"
+        },
+        {
+          "version": "1.21.4",
+          "gpg": "https://nginx.org/download/nginx-1.21.4.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.4.tar.gz"
+        },
+        {
+          "version": "1.21.3",
+          "gpg": "https://nginx.org/download/nginx-1.21.3.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.3.tar.gz"
+        },
+        {
+          "version": "1.21.2",
+          "gpg": "https://nginx.org/download/nginx-1.21.2.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.2.tar.gz"
+        },
+        {
+          "version": "1.21.1",
+          "gpg": "https://nginx.org/download/nginx-1.21.1.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.1.tar.gz"
+        },
+        {
+          "version": "1.21.0",
+          "gpg": "https://nginx.org/download/nginx-1.21.0.tar.gz.asc",
+          "link": "https://nginx.org/download/nginx-1.21.0.tar.gz"
+        }
+      ]
+    }
+  ]
+}

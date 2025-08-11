@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import MainSidebar from '@/components/MainSidebar.vue';
 import MainLayout from '@/layouts/MainLayout.vue';
 import { SERVICE_APPS } from '@/const';
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
-import type { ChipProps, InputMenuItem, TabsItem } from '@nuxt/ui';
+import type { TabsItem } from '@nuxt/ui';
 import AppVersions from '@/components/Services/AppVersions.vue';
 
 const tabs: TabsItem[] = [
@@ -24,11 +23,6 @@ const tabs: TabsItem[] = [
     slot: 'options' as const,
     icon: 'i-lucide-settings',
   },
-  {
-    label: 'Terminal',
-    slot: 'terminal' as const,
-    icon: 'i-lucide-terminal',
-  },
 ];
 
 const route = useRoute();
@@ -36,30 +30,6 @@ const route = useRoute();
 const item = computed(() => {
   return SERVICE_APPS.find((v) => v.name === route.params.app);
 });
-
-// TEST INSTALLED VERSION
-const installed = ref(['1.0.2', '1.0.4']);
-const versions = ref(['1.0.0', '1.0.1', '1.0.2', '1.0.3', '1.0.4']);
-
-const getUserInstalledVersions = () =>
-  versions.value.map((version) => ({
-    label: version,
-    chip: installed.value.includes(version)
-      ? {
-          color: 'success' as const,
-        }
-      : {
-          color: 'neutral' as const,
-        },
-  })) satisfies InputMenuItem[];
-
-const appVersions = computed(() => {
-  return getUserInstalledVersions();
-});
-
-const version = ref(
-  getUserInstalledVersions().find((v) => v.label === '1.0.0') || getUserInstalledVersions()[0],
-);
 </script>
 
 <template>
@@ -95,10 +65,6 @@ const version = ref(
 
                 <template #options="{}">
                   <p>This is the config tab.</p>
-                </template>
-
-                <template #terminal="{}">
-                  <p>This is the terminal tab.</p>
                 </template>
               </UTabs>
             </UCard>
